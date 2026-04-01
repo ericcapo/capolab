@@ -15,8 +15,9 @@
                 { text: 'Home', href: 'index.html', icon: '🏠' },
                 { text: 'Research', href: 'research.html', icon: '🔬' },
                 { text: 'Team', href: 'people.html', icon: '👥' },
+                { text: 'News', href: 'news.html', icon: '📸' }
                 { text: 'Publications', href: 'papers.html', icon: '📄' },
-                { text: 'Gallery', href: 'gallery.html', icon: '📸' }
+         
             ]
         },
         
@@ -27,24 +28,25 @@
                 { text: 'Capo lab', href: 'index.html', icon: '🏠' },
                 { text: 'Research', href: 'research.html', icon: '🔬' },
                 { text: 'Team', href: 'people.html', icon: '👥' },
+                { text: 'News', href: 'news.html', icon: '📸' }
                 { text: 'Publications', href: 'papers.html', icon: '📄' },
-                { text: 'Gallery', href: 'gallery.html', icon: '📸' }
+
             ]
         },
         
         // Bottom bar configuration
         bottomBar: {
             enabled: true,
-            copyright: '© 2025 Capo Lab · Department of Ecology and Environmental Science · Umeå University',
+            copyright: '© 2025 Capo Lab · Department of Ecology, Environment and Geoscience · Umeå University',
             footerLinks: [
                 { text: 'Home', href: 'index.html' },
                 { text: 'Research', href: 'research.html' },
                 { text: 'Team', href: 'people.html' },
                 { text: 'Publications', href: 'papers.html' },
-                { text: 'Gallery', href: 'gallery.html' },
+                { text: 'News', href: 'news.html' },
                 { text: 'Contact', href: 'contact.html' }
             ],
-            credits: '📸 Fieldwork & moments | Background: back.jpg'
+            credits: '📸 Fieldwork & moments | Background: images/back.jpg'
         },
         
         // Global styles
