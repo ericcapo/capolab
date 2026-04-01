@@ -1,42 +1,173 @@
 <!-- news.html -->
-<!-- This content is meant to be rendered by the renderNews() function in main.js -->
-<h1 class="section-title">News & Updates</h1>
-<p>Stay updated with the latest from Capo Lab.</p>
+<style>
+    .news-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .news-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(2px);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+    
+    .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .news-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background-color: #f0f0f0;
+    }
+    
+    .news-content {
+        padding: 1.5rem;
+    }
+    
+    .news-date {
+        color: #2c7da0;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .news-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1f3b4c;
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    .news-summary {
+        color: #555;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+    
+    .read-more {
+        color: #2c7da0;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: gap 0.3s ease;
+    }
+    
+    .read-more:hover {
+        gap: 0.75rem;
+        color: #1f5e7a;
+    }
+    
+    @media (max-width: 768px) {
+        .news-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .news-image {
+            height: 180px;
+        }
+        
+        .news-content {
+            padding: 1rem;
+        }
+        
+        .news-title {
+            font-size: 1.1rem;
+        }
+    }
+</style>
 
-<div style="margin-top: 2rem;">
-    <div class="news-item">
-        <div class="news-date">March 2025</div>
-        <div class="news-title">New Paper in Nature Water</div>
-        <div class="news-summary">Our study "Climate-driven deoxygenation promoted potential mercury methylators in the past Black Sea water column" led by Mingye Zhong and Eric Capo has been published in Nature Water.</div>
-    </div>
+<div class="news-container">
+    <h1 class="section-title">News & Updates</h1>
+    <p>Stay updated with the latest from Capo Lab.</p>
     
-    <div class="news-item">
-        <div class="news-date">January 2025</div>
-        <div class="news-title">Global Impact Research Featured in Nature</div>
-        <div class="news-summary">The lab contributed to "The global human impact on biodiversity" led by François Keck, published in Nature, highlighting worldwide biodiversity patterns.</div>
-    </div>
-    
-    <div class="news-item">
-        <div class="news-date">October 2024</div>
-        <div class="news-title">New Publication in PNAS</div>
-        <div class="news-summary">Our collaborative work "Transient social-ecological dynamics reveal signals of decoupling in a highly disturbed Anthropocene landscape" led by Q. Lin is now out in Proceedings of the National Academy of Sciences.</div>
-    </div>
-    
-    <div class="news-item">
-        <div class="news-date">September 2024</div>
-        <div class="news-title">Sedimentary DNA Book Published</div>
-        <div class="news-summary">Eric Capo co-edited "Tracking Environmental Change Using Lake Sediments: Volume 6 - Sedimentary DNA" published by Springer.</div>
-    </div>
-    
-    <div class="news-item">
-        <div class="news-date">August 2023</div>
-        <div class="news-title">ERC Grant Awarded</div>
-        <div class="news-summary">Capo Lab receives funding to advance research on microbial mercury methylation and deoxygenation in aquatic ecosystems.</div>
-    </div>
-    
-    <div class="news-item">
-        <div class="news-date">June 2023</div>
-        <div class="news-title">New Protocol for Mercury Methylation Genes</div>
-        <div class="news-summary">The lab published a consensus protocol for the recovery of mercury methylation genes from metagenomes in Molecular Ecology Resources.</div>
+    <div class="news-grid">
+        <div class="news-card" onclick="openNewsModal('Nature Water Publication')">
+            <img src="images/team2025.png" alt="Nature Water Publication" class="news-image" onerror="this.src='https://via.placeholder.com/400x200?text=News+Image'">
+            <div class="news-content">
+                <div class="news-date">March 2025</div>
+                <div class="news-title">New Paper in Nature Water</div>
+                <div class="news-summary">Our study "Climate-driven deoxygenation promoted potential mercury methylators in the past Black Sea water column" led by Mingye Zhong and Eric Capo has been published in Nature Water.</div>
+                <span class="read-more">Read more →</span>
+            </div>
+        </div>
+        
+        <div class="news-card" onclick="openNewsModal('Nature Publication')">
+            <img src="images/team2025.png" alt="Nature Publication" class="news-image" onerror="this.src='https://via.placeholder.com/400x200?text=News+Image'">
+            <div class="news-content">
+                <div class="news-date">January 2025</div>
+                <div class="news-title">Global Impact Research Featured in Nature</div>
+                <div class="news-summary">The lab contributed to "The global human impact on biodiversity" led by François Keck, published in Nature, highlighting worldwide biodiversity patterns.</div>
+                <span class="read-more">Read more →</span>
+            </div>
+        </div>
+        
+        <div class="news-card" onclick="openNewsModal('PNAS Publication')">
+            <img src="images/team2025.png" alt="PNAS Publication" class="news-image" onerror="this.src='https://via.placeholder.com/400x200?text=News+Image'">
+            <div class="news-content">
+                <div class="news-date">October 2024</div>
+                <div class="news-title">New Publication in PNAS</div>
+                <div class="news-summary">Our collaborative work "Transient social-ecological dynamics reveal signals of decoupling in a highly disturbed Anthropocene landscape" led by Q. Lin is now out in Proceedings of the National Academy of Sciences.</div>
+                <span class="read-more">Read more →</span>
+            </div>
+        </div>
+        
+        <div class="news-card" onclick="openNewsModal('Sedimentary DNA Book')">
+            <img src="images/team2025.png" alt="Sedimentary DNA Book" class="news-image" onerror="this.src='https://via.placeholder.com/400x200?text=News+Image'">
+            <div class="news-content">
+                <div class="news-date">September 2024</div>
+                <div class="news-title">Sedimentary DNA Book Published</div>
+                <div class="news-summary">Eric Capo co-edited "Tracking Environmental Change Using Lake Sediments: Volume 6 - Sedimentary DNA" published by Springer.</div>
+                <span class="read-more">Read more →</span>
+            </div>
+        </div>
+        
+        <div class="news-card" onclick="openNewsModal('ERC Grant')">
+            <img src="images/team2025.png" alt="ERC Grant" class="news-image" onerror="this.src='https://via.placeholder.com/400x200?text=News+Image'">
+            <div class="news-content">
+                <div class="news-date">August 2023</div>
+                <div class="news-title">ERC Grant Awarded</div>
+                <div class="news-summary">Capo Lab receives funding to advance research on microbial mercury methylation and deoxygenation in aquatic ecosystems.</div>
+                <span class="read-more">Read more →</span>
+            </div>
+        </div>
+        
+        <div class="news-card" onclick="openNewsModal('Molecular Ecology Resources Protocol')">
+            <img src="images/team2025.png" alt="Molecular Ecology Resources" class="news-image" onerror="this.src='https://via.placeholder.com/400x200?text=News+Image'">
+            <div class="news-content">
+                <div class="news-date">June 2023</div>
+                <div class="news-title">New Protocol for Mercury Methylation Genes</div>
+                <div class="news-summary">The lab published a consensus protocol for the recovery of mercury methylation genes from metagenomes in Molecular Ecology Resources.</div>
+                <span class="read-more">Read more →</span>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    function openNewsModal(newsTitle) {
+        alert(`More details about: ${newsTitle}\n\nFull news article coming soon.`);
+        // You can replace this with a modal window or navigate to a full article page
+    }
+</script>
