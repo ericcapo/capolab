@@ -37,7 +37,7 @@ body::before {
 
 /* Navigation */
 nav {
-    background-image: url('images/back.png');
+    background-image: url('images/back.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -94,7 +94,7 @@ nav {
 footer {
     text-align: center;
     padding: 2rem;
-    background-image: url('images/back.png');
+    background-image: url('images/back.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
