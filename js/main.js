@@ -1,10 +1,10 @@
-// main.js
+// main.js (modified version with clickable publication items using DOI links)
 // Data storage
 const siteData = {
     currentPage: 'home',
     activePhoto: null,
     pageContent: {}, // Cache for loaded HTML content
-    newsItems: [] // Store parsed news items (including image URLs)
+    newsItems: [] // Store parsed news items (including image URLs and links)
 };
 
 // Navigation handler
@@ -54,7 +54,7 @@ function renderModal() {
     }
 }
 
-// Parse news HTML to extract items - IMPROVED VERSION WITH IMAGE SUPPORT
+// Parse news HTML to extract items - IMPROVED VERSION WITH IMAGE AND LINK SUPPORT
 function parseNewsItems(html) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
@@ -89,11 +89,34 @@ function parseNewsItems(html) {
         
         // Extract image URL
         let imageUrl = '';
-        // Look for image with class .news-image first, then any image inside the item
         let imgElem = item.querySelector('.news-image');
         if (!imgElem) imgElem = item.querySelector('img');
         if (imgElem && imgElem.src) {
             imageUrl = imgElem.src;
+        }
+        
+        // Extract article link (for "Read more")
+        let articleLink = '';
+        // First, check if the title is wrapped in an <a> tag
+        if (titleElem) {
+            const titleLink = titleElem.querySelector('a');
+            if (titleLink && titleLink.href) {
+                articleLink = titleLink.href;
+            }
+        }
+        // If not found, look for a "read more" link inside the item
+        if (!articleLink) {
+            const readMoreLink = item.querySelector('a.read-more, a:contains("Read more"), a:contains("read more")');
+            if (readMoreLink && readMoreLink.href) {
+                articleLink = readMoreLink.href;
+            }
+        }
+        // Fallback: look for any link inside the item
+        if (!articleLink) {
+            const anyLink = item.querySelector('a');
+            if (anyLink && anyLink.href) {
+                articleLink = anyLink.href;
+            }
         }
         
         // If still not found, try to find date from text pattern
@@ -132,7 +155,8 @@ function parseNewsItems(html) {
                 date: date,
                 title: title,
                 summary: summary.length > 200 ? summary.substring(0, 200) + '...' : summary,
-                imageUrl: imageUrl   // store the image URL
+                imageUrl: imageUrl,
+                link: articleLink   // store the full article URL
             });
         }
     });
@@ -204,7 +228,7 @@ async function loadPageContent(page) {
         const content = await response.text();
         siteData.pageContent[page] = content;
         
-        // If loading news page, parse and store news items (including images)
+        // If loading news page, parse and store news items (including images and links)
         if (page === 'news') {
             siteData.newsItems = parseNewsItems(content);
         }
@@ -222,16 +246,19 @@ async function loadPageContent(page) {
                         <div class="news-date">November 15, 2024</div>
                         <div class="news-title">Welcome to Capo Lab</div>
                         <div class="news-summary">We are excited to announce the launch of our new website. Stay tuned for updates on our research and team activities.</div>
+                        <a href="#" class="read-more">Read more →</a>
                     </div>
                     <div class="news-item">
                         <div class="news-date">October 1, 2024</div>
                         <div class="news-title">New Research Grant Awarded</div>
                         <div class="news-summary">Capo Lab has received a new research grant to study microbial communities in freshwater systems.</div>
+                        <a href="#" class="read-more">Read more →</a>
                     </div>
                     <div class="news-item">
                         <div class="news-date">September 15, 2024</div>
                         <div class="news-title">Lab Joins Umeå University</div>
                         <div class="news-summary">We are happy to announce that Capo Lab has joined the Department of Ecology, Environment and Geoscience at Umeå University.</div>
+                        <a href="#" class="read-more">Read more →</a>
                     </div>
                 </div>
             `;
@@ -240,21 +267,49 @@ async function loadPageContent(page) {
     }
 }
 
-// Render home page with top 3 news items (including images)
+// Enhance publications page: make each publication item clickable with DOI link
+function enhancePublications() {
+    const publicationItems = document.querySelectorAll('.publication-item');
+    publicationItems.forEach(item => {
+        // Find the DOI link inside this publication item
+        const doiLink = item.querySelector('.publication-doi a');
+        if (doiLink && doiLink.href) {
+            // Make the whole item clickable
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', (e) => {
+                // Prevent click if the target is the DOI link itself (to avoid double navigation)
+                if (e.target === doiLink || doiLink.contains(e.target)) {
+                    return; // Let the link handle it naturally
+                }
+                window.open(doiLink.href, '_blank');
+            });
+            // Add a subtle hover effect to indicate it's clickable (already in CSS, but ensure)
+            item.classList.add('clickable-publication');
+        }
+    });
+}
+
+// Render home page with top 3 news items (including images and clickable read-more links)
 function renderHome() {
     const topNews = siteData.newsItems.slice(0, 3);
     
-    const newsHtml = topNews.length > 0 ? topNews.map(news => `
-        <div class="news-card" onclick="navigateTo('news')">
-            ${news.imageUrl ? `<img src="${escapeHtml(news.imageUrl)}" alt="${escapeHtml(news.title)}" class="news-image">` : ''}
-            <div class="news-content">
-                <div class="news-date">${escapeHtml(news.date)}</div>
-                <div class="news-title">${escapeHtml(news.title)}</div>
-                <div class="news-summary">${escapeHtml(news.summary)}</div>
-                <span class="read-more">Read more →</span>
+    const newsHtml = topNews.length > 0 ? topNews.map(news => {
+        // Use the extracted link if available, otherwise fallback to the news page
+        const readMoreLink = news.link && news.link !== '#' ? news.link : 'javascript:void(0);';
+        const onClickAttr = !news.link || news.link === '#' ? 'onclick="navigateTo(\'news\'); return false;"' : '';
+        
+        return `
+            <div class="news-card">
+                ${news.imageUrl ? `<img src="${escapeHtml(news.imageUrl)}" alt="${escapeHtml(news.title)}" class="news-image">` : ''}
+                <div class="news-content">
+                    <div class="news-date">${escapeHtml(news.date)}</div>
+                    <div class="news-title">${escapeHtml(news.title)}</div>
+                    <div class="news-summary">${escapeHtml(news.summary)}</div>
+                    <a href="${escapeHtml(readMoreLink)}" class="read-more" target="_blank" ${onClickAttr}>Read more →</a>
+                </div>
             </div>
-        </div>
-    `).join('') : `
+        `;
+    }).join('') : `
         <div class="news-card">
             <div class="news-content">
                 <div class="news-date">Loading news...</div>
@@ -348,6 +403,11 @@ async function render() {
     }
     
     pageContainer.innerHTML = content;
+    
+    // After rendering the page content, apply enhancements for publications page
+    if (siteData.currentPage === 'publications') {
+        enhancePublications();
+    }
 }
 
 // Initialize when page loads
