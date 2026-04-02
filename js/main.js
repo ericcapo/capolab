@@ -4,7 +4,7 @@ const siteData = {
     currentPage: 'home',
     activePhoto: null,
     pageContent: {}, // Cache for loaded HTML content
-    newsItems: [] // Store parsed news items
+    newsItems: [] // Store parsed news items (including image URLs)
 };
 
 // Navigation handler
@@ -54,14 +54,13 @@ function renderModal() {
     }
 }
 
-// Parse news HTML to extract items - IMPROVED VERSION
+// Parse news HTML to extract items - IMPROVED VERSION WITH IMAGE SUPPORT
 function parseNewsItems(html) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const newsItems = [];
     
     // Try multiple selectors to find news items
-    // Look for news cards - typical patterns from the news page structure
     let items = [];
     
     // Try to find news items by common classes
@@ -69,12 +68,10 @@ function parseNewsItems(html) {
     
     // If no items found with specific classes, look for structured content blocks
     if (items.length === 0) {
-        // Try to find containers that might hold news entries
         const possibleContainers = doc.querySelectorAll('.news-grid > div, .news-list > div, .posts-list > div');
         if (possibleContainers.length > 0) {
             items = possibleContainers;
         } else {
-            // Last resort: look for any divs containing date and title patterns
             const allDivs = doc.querySelectorAll('div');
             items = Array.from(allDivs).filter(div => {
                 const hasDate = div.querySelector('.date, .news-date, .post-date');
@@ -90,13 +87,20 @@ function parseNewsItems(html) {
         let titleElem = item.querySelector('.news-title, .title, h3, .post-title, .entry-title');
         let summaryElem = item.querySelector('.news-summary, .summary, .excerpt, .post-excerpt, p');
         
-        // If still not found, try to extract from raw HTML structure
+        // Extract image URL
+        let imageUrl = '';
+        // Look for image with class .news-image first, then any image inside the item
+        let imgElem = item.querySelector('.news-image');
+        if (!imgElem) imgElem = item.querySelector('img');
+        if (imgElem && imgElem.src) {
+            imageUrl = imgElem.src;
+        }
+        
+        // If still not found, try to find date from text pattern
         if (!dateElem) {
-            // Look for any element that might contain a date (e.g., with text like "Jan 15, 2024")
             const allElements = item.querySelectorAll('*');
             for (const el of allElements) {
                 const text = el.textContent.trim();
-                // Simple date pattern matching
                 if (text.match(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},?\s+\d{4}\b/)) {
                     dateElem = el;
                     break;
@@ -105,7 +109,6 @@ function parseNewsItems(html) {
         }
         
         if (!titleElem) {
-            // Look for heading elements
             titleElem = item.querySelector('h1, h2, h3, h4, h5, h6');
         }
         
@@ -117,7 +120,6 @@ function parseNewsItems(html) {
             if (summaryElem) {
                 summary = summaryElem.textContent.trim();
             } else {
-                // Extract first paragraph or some text as summary
                 const firstParagraph = item.querySelector('p');
                 if (firstParagraph) {
                     summary = firstParagraph.textContent.trim().substring(0, 200);
@@ -129,7 +131,8 @@ function parseNewsItems(html) {
             newsItems.push({
                 date: date,
                 title: title,
-                summary: summary.length > 200 ? summary.substring(0, 200) + '...' : summary
+                summary: summary.length > 200 ? summary.substring(0, 200) + '...' : summary,
+                imageUrl: imageUrl   // store the image URL
             });
         }
     });
@@ -154,7 +157,6 @@ function parseNewsItems(html) {
 
 // Helper function to parse various date formats
 function parseDate(dateString) {
-    // Try to parse common date formats
     const formats = [
         /(\w+)\s+(\d{1,2}),?\s+(\d{4})/, // "Jan 15, 2024" or "Jan 15 2024"
         /(\d{1,2})\/(\d{1,2})\/(\d{4})/, // "15/1/2024" or "1/15/2024"
@@ -170,22 +172,18 @@ function parseDate(dateString) {
         const match = dateString.match(format);
         if (match) {
             if (format === formats[0]) {
-                // Named month format
                 const month = months[match[1].toLowerCase().substring(0, 3)];
                 if (month !== undefined) {
                     return new Date(parseInt(match[3]), month, parseInt(match[2]));
                 }
             } else if (format === formats[1]) {
-                // Numeric month/day/year
                 return new Date(parseInt(match[3]), parseInt(match[2]) - 1, parseInt(match[1]));
             } else if (format === formats[2]) {
-                // Year-month-day
                 return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]));
             }
         }
     }
     
-    // Try direct Date parsing as fallback
     const parsed = new Date(dateString);
     if (!isNaN(parsed.getTime())) {
         return parsed;
@@ -196,7 +194,6 @@ function parseDate(dateString) {
 
 // Load HTML content from external files
 async function loadPageContent(page) {
-    // Check if content is already cached
     if (siteData.pageContent[page]) {
         return siteData.pageContent[page];
     }
@@ -207,7 +204,7 @@ async function loadPageContent(page) {
         const content = await response.text();
         siteData.pageContent[page] = content;
         
-        // If loading news page, parse and store news items
+        // If loading news page, parse and store news items (including images)
         if (page === 'news') {
             siteData.newsItems = parseNewsItems(content);
         }
@@ -215,7 +212,6 @@ async function loadPageContent(page) {
         return content;
     } catch (error) {
         console.error(error);
-        // Provide fallback content for missing pages
         if (page === 'news') {
             return `
                 <div class="page-header">
@@ -244,14 +240,13 @@ async function loadPageContent(page) {
     }
 }
 
-// Render home page with top 3 news items
+// Render home page with top 3 news items (including images)
 function renderHome() {
-    // Get top 3 news items (most recent 3)
     const topNews = siteData.newsItems.slice(0, 3);
     
-    // If no news items found yet, show placeholder
     const newsHtml = topNews.length > 0 ? topNews.map(news => `
         <div class="news-card" onclick="navigateTo('news')">
+            ${news.imageUrl ? `<img src="${escapeHtml(news.imageUrl)}" alt="${escapeHtml(news.title)}" class="news-image">` : ''}
             <div class="news-content">
                 <div class="news-date">${escapeHtml(news.date)}</div>
                 <div class="news-title">${escapeHtml(news.title)}</div>
@@ -308,7 +303,6 @@ async function render() {
     const app = document.getElementById('app');
     if (!app) return;
     
-    // Navigation
     const navigation = `
         <nav>
             <div class="nav-container">
@@ -344,14 +338,12 @@ async function render() {
         await loadPageContent('news');
     }
     
-    // Load content for current page
     const pageContainer = document.getElementById('page-container');
     let content = '';
     
     if (siteData.currentPage === 'home') {
         content = renderHome();
     } else {
-        // Load from external HTML files for research, team, news, publications
         content = await loadPageContent(siteData.currentPage);
     }
     
@@ -362,7 +354,6 @@ async function render() {
 document.addEventListener('DOMContentLoaded', () => {
     render();
     
-    // Close modal when clicking outside
     document.addEventListener('click', (e) => {
         const modal = document.getElementById('modal');
         if (e.target === modal) {
@@ -370,7 +361,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Handle escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeModal();
