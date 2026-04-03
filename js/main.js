@@ -322,7 +322,7 @@ function renderHome() {
     return `
         <div class="hero">
             <h1>Welcome to Capo Lab</h1>
-            <p>We explore the life of microorganisms in marine and freshwater systems</p>
+            <p>We explore the past lives of aquatic microorganisms and trace their descendants across time</p>
         </div>
         
         <div class="lab-intro">
