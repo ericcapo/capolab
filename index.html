@@ -3,8 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capo Lab</title>
+    <title>Capo Lab | Microbial Ecology</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* === OVERRIDES TO PUSH CONTENT HIGHER (just below the top bar) === */
+        
+        /* 1. Remove extra top padding from the main container */
+        .container {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        
+        /* 2. Hero section (title + subtitle) – reduce top margin and spacing */
+        .hero {
+            margin-top: 0.25rem !important;    /* sits directly below nav */
+            margin-bottom: 0.75rem !important;
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.25rem !important;
+        }
+        
+        /* 3. Make the subtitle text BIGGER as requested */
+        .hero p {
+            font-size: 1.7rem !important;      /* significantly larger */
+            font-weight: 450;
+            line-height: 1.3;
+        }
+        
+        /* 4. Move the "text and picture below" (lab-intro) higher */
+        .lab-intro {
+            margin-top: 0 !important;           /* remove default top gap */
+            padding-top: 0 !important;
+            margin-bottom: 2rem;
+        }
+        
+        /* Optional: keep responsive behavior on smaller screens */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1.3rem !important;
+            }
+            .lab-intro {
+                flex-direction: column;
+            }
+        }
+        
+        /* ensure nav sticky does not cause overlap (just aesthetic) */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
     <div id="app"></div>
