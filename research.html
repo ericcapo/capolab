@@ -1,277 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Capo Lab | Research</title>
     <style>
-        /* ===== ADDITIONAL STYLES FOR THE THREE FULL-PAGE VIDEO BOXES ===== */
-        /* These styles integrate seamlessly with the existing site theme (background, blur, glassmorphism) */
-        .research-video-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Each box = a "full page" card with generous min-height and consistent design */
         .research-video-card {
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(6px);
-            border-radius: 12px;
-            padding: 2rem 2rem;
-            transition: transform 0.25s ease, box-shadow 0.3s ease;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(106, 176, 214, 0.25);
-            min-height: 460px;      /* ensures substantial "full page" visual presence */
-            display: flex;
-            align-items: center;
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: #f9fbfd;
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
-        .research-video-card:hover {
-            transform: translateY(-6px);
-            background: rgba(0, 0, 0, 0.65);
-            box-shadow: 0 22px 38px rgba(0, 0, 0, 0.4);
-            border-color: rgba(106, 176, 214, 0.5);
-        }
-
-        /* Two-column flexible grid for text/video layout */
-        .video-text-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.2rem;
-            width: 100%;
-            align-items: center;
-        }
-
-        /* Text container styling */
-        .box-text {
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-        }
-
-        .box-text h2 {
-            font-size: 1.9rem;
+        /* Main title styling – top of the box, color #6ab0d6 */
+        .research-video-card > h2 {
+            color: #6ab0d6;
+            font-size: 1.8rem;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: #8bcbff;
-            letter-spacing: -0.2px;
-            border-left: 5px solid #6ab0d6;
-            padding-left: 1rem;
+            margin: 0;
+            padding: 1.5rem 2rem 0.5rem 2rem;
+            border-bottom: 2px solid #e0f0f7;
+        }
+
+        .video-text-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .box-text {
+            flex: 1;
+            min-width: 240px;
         }
 
         .box-text p {
-            font-size: 1.05rem;
-            line-height: 1.55;
-            margin-bottom: 0.75rem;
-            text-align: justify;
-            color: #f5f5f5;
+            line-height: 1.5;
+            color: #2c3e4f;
+            margin-bottom: 1rem;
         }
 
-        /* Video wrapper: responsive 16:9 with rounded corners */
+        .box-text p strong {
+            color: #1f6e8c;
+        }
+
         .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-            background: #000;
-            transition: transform 0.2s ease, box-shadow 0.2s;
-        }
-
-        .video-wrapper:hover {
-            transform: scale(1.01);
-            box-shadow: 0 18px 32px rgba(0, 0, 0, 0.45);
+            flex: 1;
+            min-width: 280px;
+            aspect-ratio: 16 / 9;
         }
 
         .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            border: 0;
             border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Special modifier: reverse order (video left, text right) for second box */
-        .reverse-layout {
-            direction: ltr; /* keep normal text flow */
+        /* Optional: add a subtle hover effect */
+        .research-video-card:hover {
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+            transition: 0.2s;
         }
 
-        .reverse-layout .video-text-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        /* For the reverse layout we need video column first, text column second */
-        /* the DOM order already places video first then text, so grid automatically works.
-           but to ensure no unexpected order, we rely on markup structure. 
-           Additional responsiveness: on small screens we force column direction */
-        
-        /* Responsive: on tablets & phones, each box becomes a stacked column (full width) */
-        @media (max-width: 860px) {
-            .research-video-card {
-                padding: 1.5rem;
-                min-height: auto;
-            }
-            
+        /* Responsive */
+        @media (max-width: 700px) {
             .video-text-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                flex-direction: column;
             }
-            
-            /* For reverse layout on mobile: we want video above text OR keep natural flow? */
-            /* natural order in HTML: for box2 (reverse) video appears above text, that's fine */
-            .box-text h2 {
-                font-size: 1.6rem;
+            .research-video-card > h2 {
+                font-size: 1.5rem;
+                padding: 1.2rem 1.5rem 0.3rem 1.5rem;
             }
-            
-            .box-text p {
-                font-size: 0.98rem;
+            .video-text-grid {
+                padding: 1.5rem;
             }
-            
-            .video-wrapper {
-                margin-top: 0.5rem;
-            }
-        }
-
-        /* Additional subtle separator between boxes */
-        .research-video-card:not(:last-child)::after {
-            content: '';
-            display: none; /* no extra line, spacing from gap is enough */
-        }
-
-        /* Keep the intro paragraph and main title consistent with the original lab style */
-        .research-intro-text {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            padding: 1.2rem 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .research-intro-text p {
-            font-size: 1.1rem;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* keep global section-title style */
-        .section-title {
-            font-size: 2.3rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-
-        /* small improvements for video accessibility */
-        .video-wrapper iframe {
-            pointer-events: auto;
-        }
-
-        /* make links or any extras consistent */
-        .box-text a {
-            color: #8bcbff;
-            text-decoration: none;
-            border-bottom: 1px dotted #6ab0d6;
-        }
-        .box-text a:hover {
-            color: #c2e2ff;
-            border-bottom: 1px solid #ffffff;
         }
     </style>
 </head>
 <body>
-    <!-- The following content will be injected into #page-container by main.js -->
-    <!-- All structural elements follow the existing design system (transparent cards, blur, etc) -->
-    <div class="research-page-container">
-        <!-- Keep original research header: section title + intro paragraph (consistent with old style) -->
-        <h1 class="section-title">Research lines</h1>
-        <div class="research-intro-text">
-            <p>Our research focuses on understanding aquatic microbial ecosystems through cutting-edge molecular ecology methods. We integrate environmental DNA, paleogenomics, multi-omics, phylogenomics to unravel microbial changes in past, current and future freshwater and marine ecosystems</p>
+
+<div class="research-video-card">
+    <h2>Unravel microbial diversity in lake ecosystems</h2>
+
+    <div class="video-text-grid">
+        <div class="box-text">
+            We study the microbial diversity in lake surface waters and the active microbial layer in underlying sediments. We developed a drone-sampling approach to collect samples for a large number of lakes and provide the first catalogue of microbial diversity in Swedish lakes.</p>
+            <p><strong>Methods:</strong> drone-enabled water sampling, sediment coring, metabarcoding, metagenomics</p>
         </div>
-
-        <!-- THREE FULL-PAGE BOXES stacked vertically -->
-        <div class="research-video-stack">
-            
-            <!-- BOX 1: TITLE + PARAGRAPH (LEFT) | VIDEO (RIGHT) -->
-            <div class="research-video-card">
-                <h2>Unravel microbial diversity in lake ecosystems</h2>
-                <div class="video-text-grid">
-                    <!-- Left column: text block -->
-                    <div class="box-text">
-                        <h2>Lake microbial diversity<br><span style="font-size: 1rem; color: #cfe6f0;">What microbes do know</span></h2>
-                        <p>We study the microbial diversity in lake surface waters and the active microbial layer in underlying sediments. We developed a drone-sampling approach to collect samples for a large number of lakes and provide the first catalogue of microbial diversity in Swedish lakes.</p>
-                        <p><strong>Methods:</strong> drone-enabled water sampling, sediment coring, metabarcoding, metagenomics</p>
-                    </div>
-                    <!-- Right column: YouTube embed -->
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/dNsyfW5JZag" 
-                            title="YouTube video player - Aquatic Microbial Ecology" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BOX 2: VIDEO ON LEFT | TITLE + PARAGRAPH ON RIGHT (reverse layout) -->
-            <div class="research-video-card">
-                <div class="video-text-grid">
-                    <!-- Left column: video (first in DOM = left side) -->
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/_EdsVF-Etpo" 
-                            title="YouTube video player - Microbial Community Dynamics" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <!-- Right column: text block -->
-                    <div class="box-text">
-                        <h2>🌊 Microbial metabolisms in coastal systems<br><span style="font-size: 1rem; color: #cfe6f0;">What microbes did in the past</span></h2>
-                        <p>Aquatic oxygen minimum zones are expanding due to warming and nutrient pollution. Our lab investigates how microbial communities — bacteria, archaea, and protists — respond to deoxygenation gradients. Using high-resolution time-series and multi-omics (metatranscriptomics + metabolomics), we decipher functional shifts, metabolic adaptations, and cascading effects on biogeochemical cycles (nitrogen, sulfur, carbon).</p>
-                        <p>🌍 <strong>Approaches:</strong> water sampling, sediment coring, metabarcoding, metagenomics, genome-resolved metagenomics, genone-centric metatranscriptomics</p>
-                    </div>
-                </div>
-            </div>
-
-  
-            <!-- BOX 3: same layout as BOX 1: title + paragraph on left | video on right -->
-            <div class="research-video-card">
-                <div class="video-text-grid">
-                    <div class="box-text">
-                        <h2>Past microbial functions<br><span style="font-size: 1rem; color: #cfe6f0;">From genes to ecosystem services</span></h2>
-                        <p>We use sedimentary ancient DNA (sedDNA) to reconstruct past changes in freshwater and marine microbial communities over centuries to millennia. By analyzing genetic records preserved in sediments, we uncover how microbial assemblages responded to climate shifts, eutrophication, deoxygenation and other environmental stressors. This long-term perspective is essential to predict future trajectories under ongoing anthropogenic pressures.</p>
-                        <p><strong>Approaches:</strong> sediment coring, ancient metagenomics, phylogenomics</p>
-                    </div>
-                    <div class="video-wrapper">
-                        <iframe 
-                            src="https://www.youtube.com/embed/_EdsVF-Etpo" 
-                            title="YouTube video player - Aquatic Metagenomics" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Optional footnote: research emphasis / collaboration note (transparent styling) -->
-        <div style="margin-top: 2rem; text-align: center; background: rgba(0,0,0,0.35); backdrop-filter: blur(3px); padding: 1rem; border-radius: 40px; width: fit-content; margin-left: auto; margin-right: auto;">
-            <p style="color: #eef4ff; font-size: 0.85rem;">🔗 Integrating paleoecology, multi-omics & experimental approaches — <a href="#" style="color:#6ab0d6;">Learn more about ongoing projects →</a></p>
+        <div class="video-wrapper">
+            <iframe 
+                src="https://www.youtube.com/embed/dNsyfW5JZag" 
+                title="YouTube video player - Aquatic Microbial Ecology" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen>
+            </iframe>
         </div>
     </div>
+</div>
+
+
+        <div class="research-video-card">
+            <h2>Explore microbial metabolisms in coastal systems</h2>
+            <div class="video-text-grid">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/_EdsVF-Etpo" 
+                        title="Fjord frontiers" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                        </iframe>
+                </div>
+             <div class="box-text">
+                       <p>Aquatic oxygen minimum zones are expanding due to warming and nutrient pollution. Our lab investigates how microbial communities — bacteria, archaea, and protists — respond to deoxygenation gradients. Using high-resolution time-series and multi-omics (metatranscriptomics + metabolomics), we decipher functional shifts, metabolic adaptations, and cascading effects on biogeochemical cycles (nitrogen, sulfur, carbon).</p>
+                        <p><strong>Methods:</strong> water sampling, sediment coring, metabarcoding, metagenomics, genome-resolved metagenomics, genone-centric metatranscriptomics</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="research-video-card">
+                    <h2>Track past changes in aquatic microbial functions</h2>
+                <div class="video-text-grid">
+                    <div class="box-text">
+                        <p>We use sedimentary ancient DNA (sedDNA) to reconstruct past changes in freshwater and marine microbial communities over centuries to millennia. By analyzing genetic records preserved in sediments, we uncover how microbial assemblages responded to climate shifts, eutrophication, deoxygenation and other environmental stressors. This long-term perspective is essential to predict future trajectories under ongoing anthropogenic pressures.</p>
+                        <p><strong>Methods:</strong> sediment coring, ancient metagenomics, phylogenomics</p>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/_EdsVF-Etpo" 
+                            title="Fjord frontiers" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
 </body>
 </html>
