@@ -1,4 +1,4 @@
-<!-- research.html – three research cards (toggle buttons added by main.js) -->
+<!-- research.html – three research cards (buttons added by main.js) -->
 <div class="container research-container">
     
     <!-- CARD 1 -->
@@ -45,7 +45,7 @@
 </div>
 
 <style>
-/* research page specific styles – wider on mobile, no inline script */
+/* research page specific styles – ensures buttons are visible */
 .research-container {
     max-width: 1400px;
 }
@@ -95,6 +95,7 @@
 .box-text p strong {
     color: #6ab0d6;
 }
+/* Button style – must match the class used in main.js */
 .research-toggle-btn {
     position: absolute;
     bottom: 12px;
@@ -127,7 +128,6 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     border: none;
 }
-/* Mobile adjustments: wider boxes, less side padding */
 @media (max-width: 768px) {
     .research-container {
         padding-left: 0.5rem;
