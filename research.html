@@ -51,10 +51,13 @@
 </div>
 
 <style>
-/* Same styles as before, but ensure .box-text-content does not affect layout */
+/* research page specific styles – wider on mobile */
 .research-container {
     max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;  /* default small padding on all sides */
 }
+
 .research-video-card {
     margin-bottom: 2rem;
     background: rgba(0, 0, 0, 0.5);
@@ -64,10 +67,12 @@
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
 .research-video-card:hover {
     background: rgba(0, 0, 0, 0.6);
     transform: translateY(-3px);
 }
+
 .research-video-card > h2 {
     color: #6ab0d6;
     font-size: 1.6rem;
@@ -77,15 +82,18 @@
     border-bottom: 2px solid rgba(106, 176, 214, 0.3);
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
+
 .video-text-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
     padding: 2rem;
 }
+
 .video-text-grid.reverse-on-desktop {
     flex-direction: row-reverse;
 }
+
 .box-text {
     flex: 1;
     min-width: 240px;
@@ -93,14 +101,17 @@
     position: relative;
     padding-bottom: 50px;
 }
+
 .box-text-content p {
     line-height: 1.6;
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
+
 .box-text-content p strong {
     color: #6ab0d6;
 }
+
 .research-toggle-btn {
     position: absolute;
     bottom: 12px;
@@ -118,14 +129,17 @@
     transition: background 0.2s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
+
 .research-toggle-btn:hover {
     background: black;
 }
+
 .video-wrapper {
     flex: 1;
     min-width: 280px;
     aspect-ratio: 16 / 9;
 }
+
 .video-wrapper iframe {
     width: 100%;
     height: 100%;
@@ -133,15 +147,16 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     border: none;
 }
+
+/* ===== MOBILE OVERRIDES – WIDER BOXES ===== */
 @media (max-width: 768px) {
     .research-container {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding: 0 0.5rem;   /* minimal side padding */
     }
     .video-text-grid,
     .video-text-grid.reverse-on-desktop {
         flex-direction: column;
-        padding: 1rem;
+        padding: 1rem;       /* less inner padding */
         gap: 1rem;
     }
     .research-video-card > h2 {
@@ -150,7 +165,8 @@
     }
     .box-text {
         padding-bottom: 60px;
-        min-width: auto;
+        min-width: auto;     /* remove min-width constraint */
+        width: 100%;         /* take full width */
     }
     .research-toggle-btn {
         bottom: 16px;
@@ -160,6 +176,17 @@
     }
     .video-wrapper {
         min-width: auto;
+        width: 100%;
+    }
+}
+
+/* even smaller screens (<= 480px) – even tighter */
+@media (max-width: 480px) {
+    .research-container {
+        padding: 0 0.25rem;
+    }
+    .video-text-grid {
+        padding: 0.75rem;
     }
 }
 </style>
