@@ -6,8 +6,10 @@
         <h2>Unravel microbial diversity in lake ecosystems</h2>
         <div class="video-text-grid">
             <div class="box-text" data-original-html="1">
-                <p>We study the microbial diversity in lake surface waters and the active microbial layer in underlying sediments. We developed a drone-sampling approach to collect samples for a large number of lakes and provide the first catalogue of microbial diversity in Swedish lakes.</p>
-                <p><strong>Methods:</strong> drone-enabled water sampling, sediment coring, metabarcoding, metagenomics</p>
+                <div class="box-text-content">
+                    <p>We study the microbial diversity in lake surface waters and the active microbial layer in underlying sediments. We developed a drone-sampling approach to collect samples for a large number of lakes and provide the first catalogue of microbial diversity in Swedish lakes.</p>
+                    <p><strong>Methods:</strong> drone-enabled water sampling, sediment coring, metabarcoding, metagenomics</p>
+                </div>
             </div>
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/dNsyfW5JZag" title="Aquatic Microbial Ecology" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -20,8 +22,10 @@
         <h2>Explore microbial metabolisms in coastal systems</h2>
         <div class="video-text-grid reverse-on-desktop">
             <div class="box-text" data-original-html="2">
-                <p>Aquatic oxygen minimum zones are expanding due to warming and nutrient pollution. We investigate how microbial communities — bacteria, archaea, and protists — respond to ongoing deoxygenation. We decipher functional shifts, metabolic adaptations, and cascading effects on biogeochemical cycles (nitrogen, sulfur, carbon) as well as formation of the neurotoxin methylmercury.</p>
-                <p><strong>Methods:</strong> water sampling, sediment coring, metabarcoding, metagenomics, genome‑centric metatranscriptomics</p>
+                <div class="box-text-content">
+                    <p>Aquatic oxygen minimum zones are expanding due to warming and nutrient pollution. We investigate how microbial communities — bacteria, archaea, and protists — respond to ongoing deoxygenation. We decipher functional shifts, metabolic adaptations, and cascading effects on biogeochemical cycles (nitrogen, sulfur, carbon) as well as formation of the neurotoxin methylmercury.</p>
+                    <p><strong>Methods:</strong> water sampling, sediment coring, metabarcoding, metagenomics, genome‑centric metatranscriptomics</p>
+                </div>
             </div>
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/_EdsVF-Etpo" title="Fjord frontiers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -34,8 +38,10 @@
         <h2>Track past changes in aquatic microbial functions</h2>
         <div class="video-text-grid">
             <div class="box-text" data-original-html="3">
-                <p>We use sedimentary ancient DNA (sedDNA) to reconstruct past changes in freshwater and marine microbial communities over centuries to millennia. By analyzing genetic records preserved in sediments, we uncover how microbial assemblages responded to climate shifts, eutrophication, deoxygenation and other environmental stressors. This long‑term perspective is essential to predict future trajectories under ongoing anthropogenic pressures.</p>
-                <p><strong>Methods:</strong> sediment coring, ancient metagenomics, phylogenomics</p>
+                <div class="box-text-content">
+                    <p>We use sedimentary ancient DNA (sedDNA) to reconstruct past changes in freshwater and marine microbial communities over centuries to millennia. By analyzing genetic records preserved in sediments, we uncover how microbial assemblages responded to climate shifts, eutrophication, deoxygenation and other environmental stressors. This long‑term perspective is essential to predict future trajectories under ongoing anthropogenic pressures.</p>
+                    <p><strong>Methods:</strong> sediment coring, ancient metagenomics, phylogenomics</p>
+                </div>
             </div>
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/_EdsVF-Etpo" title="Fjord frontiers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -45,7 +51,7 @@
 </div>
 
 <style>
-/* research page specific styles – ensures buttons are visible */
+/* Same styles as before, but ensure .box-text-content does not affect layout */
 .research-container {
     max-width: 1400px;
 }
@@ -87,15 +93,14 @@
     position: relative;
     padding-bottom: 50px;
 }
-.box-text p {
+.box-text-content p {
     line-height: 1.6;
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
-.box-text p strong {
+.box-text-content p strong {
     color: #6ab0d6;
 }
-/* Button style – must match the class used in main.js */
 .research-toggle-btn {
     position: absolute;
     bottom: 12px;
