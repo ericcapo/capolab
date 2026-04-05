@@ -1,5 +1,4 @@
-// main.js – fully compatible with your existing structure
-// Data storage
+// main.js – SPA with translation toggles for home and research pages
 const siteData = {
     currentPage: 'home',
     activePhoto: null,
@@ -7,7 +6,7 @@ const siteData = {
     newsItems: []
 };
 
-// Navigation handler
+// Navigation
 function navigateTo(page) {
     siteData.currentPage = page;
     render();
@@ -52,7 +51,7 @@ function renderModal() {
     }
 }
 
-// Improved date parser
+// Date parser for news
 function parseDateFlexible(dateStr) {
     if (!dateStr) return null;
     let parsed = new Date(dateStr);
@@ -69,13 +68,11 @@ function parseDateFlexible(dateStr) {
     return null;
 }
 
-// Parse news from HTML
 function parseNewsItems(html) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const newsItems = [];
     const cards = doc.querySelectorAll('.news-card');
-    console.log(`Found ${cards.length} news cards in news.html`);
     cards.forEach(card => {
         const dateElem = card.querySelector('.news-date');
         const titleElem = card.querySelector('.news-title');
@@ -106,11 +103,9 @@ function parseNewsItems(html) {
         if (dateB) return 1;
         return 0;
     });
-    console.log(`Parsed ${newsItems.length} news items`);
     return newsItems;
 }
 
-// Load HTML content from external files
 async function loadPageContent(page) {
     if (siteData.pageContent[page]) {
         return siteData.pageContent[page];
@@ -123,7 +118,6 @@ async function loadPageContent(page) {
         if (page === 'news') {
             siteData.newsItems = parseNewsItems(content);
             if (siteData.newsItems.length === 0) {
-                console.warn("No news items found, using fallback");
                 siteData.newsItems = getFallbackNews();
             }
         }
@@ -151,7 +145,6 @@ function getFallbackNews() {
     ];
 }
 
-// Enhance publications: make each item clickable with DOI link
 function enhancePublications() {
     const publicationItems = document.querySelectorAll('.publication-item');
     publicationItems.forEach(item => {
@@ -167,7 +160,7 @@ function enhancePublications() {
     });
 }
 
-// ----- CHINESE TRANSLATION TOGGLE (click, not hover) -----
+// ----- HOME PAGE TRANSLATION TOGGLE -----
 const chineseIntroTranslation = `我们研究水生微生物群落的时空动态及其对环境变化（如气候变化、富营养化、脱氧或汞污染）的功能响应。我们应用分子生态学方法，如元条形码、（古）宏基因组学、基于MAGs的分析和宏转录组学。通过对水柱和下方沉积物档案中的遗传信息进行测序，我们研究水生微生物生命的长期变化，以更好地理解它们当前和未来的发展轨迹。`;
 
 let originalEnglishHTML = '';
@@ -176,18 +169,13 @@ let isChineseActive = false;
 function initHomePageTranslation() {
     const toggleButton = document.querySelector('.cn-intro-btn');
     if (!toggleButton) return;
-    
     const textParagraph = document.querySelector('.lab-intro-text p');
     if (!textParagraph) return;
-    
     if (!originalEnglishHTML) {
         originalEnglishHTML = textParagraph.innerHTML;
     }
-    
-    // Replace button to clean up any old listeners
     const newButton = toggleButton.cloneNode(true);
     toggleButton.parentNode.replaceChild(newButton, toggleButton);
-    
     newButton.addEventListener('click', (e) => {
         e.stopPropagation();
         if (!isChineseActive) {
@@ -200,15 +188,55 @@ function initHomePageTranslation() {
             isChineseActive = false;
         }
     });
-    
     newButton.textContent = '中文';
     isChineseActive = false;
 }
 
-// Render home page with top 3 news items AND the toggle button
+// ----- RESEARCH PAGE TRANSLATION TOGGLES -----
+const researchChineseTexts = {
+    1: `<p>我们研究湖泊表层水和底层沉积物中活跃微生物层的微生物多样性。我们开发了一种无人机采样方法，为大量湖泊采集样本，并首次提供了瑞典湖泊微生物多样性的目录。</p>
+        <p><strong>方法：</strong> 无人机水质采样、沉积物岩芯采集、元条形码、宏基因组学</p>`,
+    2: `<p>由于气候变暖和营养盐污染，水体氧最小区正在扩大。我们研究微生物群落（细菌、古菌、原生生物）如何响应持续的脱氧过程。我们解析功能转变、代谢适应以及对生物地球化学循环（氮、硫、碳）的级联效应，以及神经毒素甲基汞的形成。</p>
+        <p><strong>方法：</strong> 水样采集、沉积物岩芯采集、元条形码、宏基因组学、基于基因组的宏转录组学</p>`,
+    3: `<p>我们利用沉积物古DNA（sedDNA）重建淡水与海洋微生物群落数百年至千年尺度的历史变化。通过分析沉积物中保存的遗传记录，揭示微生物组合如何响应气候变迁、富营养化、脱氧及其他环境压力。这一长期视角对于预测当前人为压力下的未来演变趋势至关重要。</p>
+        <p><strong>方法：</strong> 沉积物岩芯采集、古宏基因组学、系统发育基因组学</p>`
+};
+
+function initResearchPageTranslations() {
+    const boxes = document.querySelectorAll('.box-text');
+    if (boxes.length === 0) return;
+    boxes.forEach((box, idx) => {
+        let cardId = box.getAttribute('data-original-html');
+        if (!cardId) cardId = (idx + 1).toString();
+        if (!box.hasAttribute('data-original-content')) {
+            box.setAttribute('data-original-content', box.innerHTML);
+        }
+        if (box.querySelector('.research-toggle-btn')) return;
+        const btn = document.createElement('button');
+        btn.className = 'research-toggle-btn';
+        btn.textContent = '中文';
+        btn.setAttribute('aria-label', 'Toggle Chinese/English');
+        let isChinese = false;
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isChinese) {
+                box.innerHTML = researchChineseTexts[cardId];
+                btn.textContent = 'ENG';
+                isChinese = true;
+            } else {
+                const original = box.getAttribute('data-original-content');
+                box.innerHTML = original;
+                btn.textContent = '中文';
+                isChinese = false;
+            }
+        });
+        box.appendChild(btn);
+    });
+}
+
+// Render home page
 function renderHome() {
     const topNews = siteData.newsItems.slice(0, 3);
-    
     const newsHtml = topNews.length > 0 ? topNews.map(news => {
         const readMoreLink = news.link && news.link !== '#' ? news.link : 'javascript:void(0);';
         const onClickAttr = (!news.link || news.link === '#') ? 'onclick="navigateTo(\'news\'); return false;"' : '';
@@ -223,22 +251,13 @@ function renderHome() {
                 </div>
             </div>
         `;
-    }).join('') : `
-        <div class="news-card">
-            <div class="news-content">
-                <div class="news-date">Loading news...</div>
-                <div class="news-title">Please check back soon</div>
-                <div class="news-summary">News items will appear here once available.</div>
-            </div>
-        </div>
-    `;
+    }).join('') : `<div class="news-card"><div class="news-content"><div class="news-date">Loading news...</div><div class="news-title">Please check back soon</div><div class="news-summary">News items will appear here once available.</div></div></div>`;
     
     return `
         <div class="hero">
             <h1>Welcome to Capo Lab</h1>
             <p>We explore the life of microorganisms in marine and freshwater systems</p>
         </div>
-        
         <div class="lab-intro">
             <div class="lab-intro-text">
                 <p>We study the spatio-temporal dynamics of <b>aquatic microbial communities</b> and their functional responses to environmental change, such as climate change, eutrophication, deoxygenation or mercury pollution. We apply <b>molecular ecology</b> methods, such as metabarcoding, (ancient) metagenomics, MAGs-based analysis and metatranscriptomics. By sequencing the genetic information from <b>water columns</b> and underlying <b>sedimentary archives</b>, we investigate the long-term changes in aquatic microbial life for a better understanding of their current and future trajectories.</p>
@@ -248,12 +267,9 @@ function renderHome() {
                 <img src="images/team2025.png" alt="Capo Lab Team 2025" onerror="this.src='https://via.placeholder.com/400x200?text=Lab+Photo'">
             </div>
         </div>
-        
         <div class="news-section">
             <h2 class="section-title">Latest News</h2>
-            <div class="news-grid">
-                ${newsHtml}
-            </div>
+            <div class="news-grid">${newsHtml}</div>
             <div style="text-align: center; margin-top: 2rem;">
                 <button class="btn" onclick="navigateTo('news')">View All News →</button>
             </div>
@@ -267,11 +283,10 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Main render function
+// Main render
 async function render() {
     const app = document.getElementById('app');
     if (!app) return;
-    
     const navigation = `
         <nav>
             <div class="nav-container">
@@ -292,13 +307,10 @@ async function render() {
         </footer>
         <div id="modal" class="modal"><div id="modal-content"></div></div>
     `;
-    
     app.innerHTML = navigation;
-    
     if (!siteData.newsItems.length) {
         await loadPageContent('news');
     }
-    
     const pageContainer = document.getElementById('page-container');
     let content = '';
     if (siteData.currentPage === 'home') {
@@ -308,9 +320,8 @@ async function render() {
     } else {
         content = await loadPageContent(siteData.currentPage);
         pageContainer.innerHTML = content;
-        if (siteData.currentPage === 'publications') {
-            enhancePublications();
-        }
+        if (siteData.currentPage === 'publications') enhancePublications();
+        if (siteData.currentPage === 'research') initResearchPageTranslations();
     }
 }
 
