@@ -167,45 +167,45 @@ function enhancePublications() {
     });
 }
 
-// ----- CHINESE TRANSLATION FEATURE: replace English text inline -----
+// ----- CHINESE TRANSLATION TOGGLE (click, not hover) -----
 const chineseIntroTranslation = `我们研究水生微生物群落的时空动态及其对环境变化（如气候变化、富营养化、脱氧或汞污染）的功能响应。我们应用分子生态学方法，如元条形码、（古）宏基因组学、基于MAGs的分析和宏转录组学。通过对水柱和下方沉积物档案中的遗传信息进行测序，我们研究水生微生物生命的长期变化，以更好地理解它们当前和未来的发展轨迹。`;
 
-let originalEnglishHTML = '';  // stores the original paragraph content
+let originalEnglishHTML = '';
+let isChineseActive = false;
 
 function initHomePageTranslation() {
-    const cnButton = document.querySelector('.cn-intro-btn');
-    if (!cnButton) return;
+    const toggleButton = document.querySelector('.cn-intro-btn');
+    if (!toggleButton) return;
     
-    // Find the paragraph inside .lab-intro-text (the one containing the English text)
     const textParagraph = document.querySelector('.lab-intro-text p');
     if (!textParagraph) return;
     
-    // Save the original English content (as HTML, preserving bold tags)
     if (!originalEnglishHTML) {
         originalEnglishHTML = textParagraph.innerHTML;
     }
     
-    // Remove any previous listeners to avoid duplicates
-    cnButton.removeEventListener('mouseenter', handleMouseEnter);
-    cnButton.removeEventListener('mouseleave', handleMouseLeave);
+    // Replace button to clean up any old listeners
+    const newButton = toggleButton.cloneNode(true);
+    toggleButton.parentNode.replaceChild(newButton, toggleButton);
     
-    function handleMouseEnter() {
-        // Replace English with Chinese translation
-        textParagraph.innerHTML = chineseIntroTranslation;
-        // Optional smooth transition
-        textParagraph.style.transition = 'opacity 0.2s';
-    }
+    newButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!isChineseActive) {
+            textParagraph.innerHTML = chineseIntroTranslation;
+            newButton.textContent = 'ENG';
+            isChineseActive = true;
+        } else {
+            textParagraph.innerHTML = originalEnglishHTML;
+            newButton.textContent = '中文';
+            isChineseActive = false;
+        }
+    });
     
-    function handleMouseLeave() {
-        // Restore original English text
-        textParagraph.innerHTML = originalEnglishHTML;
-    }
-    
-    cnButton.addEventListener('mouseenter', handleMouseEnter);
-    cnButton.addEventListener('mouseleave', handleMouseLeave);
+    newButton.textContent = '中文';
+    isChineseActive = false;
 }
 
-// Render home page with top 3 news items AND the 中文 button inside .lab-intro-text
+// Render home page with top 3 news items AND the toggle button
 function renderHome() {
     const topNews = siteData.newsItems.slice(0, 3);
     
@@ -242,8 +242,7 @@ function renderHome() {
         <div class="lab-intro">
             <div class="lab-intro-text">
                 <p>We study the spatio-temporal dynamics of <b>aquatic microbial communities</b> and their functional responses to environmental change, such as climate change, eutrophication, deoxygenation or mercury pollution. We apply <b>molecular ecology</b> methods, such as metabarcoding, (ancient) metagenomics, MAGs-based analysis and metatranscriptomics. By sequencing the genetic information from <b>water columns</b> and underlying <b>sedimentary archives</b>, we investigate the long-term changes in aquatic microbial life for a better understanding of their current and future trajectories</p>
-                <!-- 中文 button (Chinese language abbreviation) at bottom right of the text box -->
-                <button class="cn-intro-btn" aria-label="Show Chinese translation">中文</button>
+                <button class="cn-intro-btn" aria-label="Toggle Chinese/English">中文</button>
             </div>
             <div class="lab-intro-image">
                 <img src="images/team2025.png" alt="Capo Lab Team 2025" onerror="this.src='https://via.placeholder.com/400x200?text=Lab+Photo'">
@@ -296,7 +295,6 @@ async function render() {
     
     app.innerHTML = navigation;
     
-    // Ensure news items are loaded before rendering home
     if (!siteData.newsItems.length) {
         await loadPageContent('news');
     }
@@ -306,7 +304,6 @@ async function render() {
     if (siteData.currentPage === 'home') {
         content = renderHome();
         pageContainer.innerHTML = content;
-        // Attach translation hover to the 中文 button (inline replacement)
         initHomePageTranslation();
     } else {
         content = await loadPageContent(siteData.currentPage);
@@ -317,7 +314,6 @@ async function render() {
     }
 }
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     render();
     document.addEventListener('click', (e) => {
