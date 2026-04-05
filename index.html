@@ -63,41 +63,6 @@
         .cn-intro-btn:hover {
             background: #0f2b44;
         }
-
-        /* Tooltip bubble for Chinese translation */
-        .cn-translate-tooltip {
-            position: fixed;
-            background: rgba(20, 30, 38, 0.95);
-            backdrop-filter: blur(12px);
-            color: #f0f3f5;
-            font-family: 'Segoe UI', 'Noto Sans CJK SC', system-ui, sans-serif;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            padding: 12px 16px;
-            border-radius: 18px;
-            max-width: 320px;
-            width: max-content;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            z-index: 2100;
-            pointer-events: none;
-            border: 1px solid rgba(255,215,150,0.4);
-        }
-        .cn-translate-tooltip::before {
-            content: '';
-            position: absolute;
-            bottom: -7px;
-            left: 20px;
-            border-width: 7px 7px 0 7px;
-            border-style: solid;
-            border-color: rgba(20,30,38,0.95) transparent transparent transparent;
-        }
-        /* variant when tooltip appears below the button */
-        .cn-translate-tooltip.tooltip-below::before {
-            top: -7px;
-            bottom: auto;
-            border-width: 0 7px 7px 7px;
-            border-color: transparent transparent rgba(20,30,38,0.95) transparent;
-        }
     </style>
 </head>
 <body>
