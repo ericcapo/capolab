@@ -1,14 +1,13 @@
-<!-- research.html – three research cards with Chinese/English toggle buttons -->
-<div class="container">
+<!-- research.html – three research cards (toggle buttons added by main.js) -->
+<div class="container research-container">
     
     <!-- CARD 1 -->
-    <div class="research-video-card" id="research-card-1">
+    <div class="research-video-card">
         <h2>Unravel microbial diversity in lake ecosystems</h2>
         <div class="video-text-grid">
             <div class="box-text" data-original-html="1">
                 <p>We study the microbial diversity in lake surface waters and the active microbial layer in underlying sediments. We developed a drone-sampling approach to collect samples for a large number of lakes and provide the first catalogue of microbial diversity in Swedish lakes.</p>
                 <p><strong>Methods:</strong> drone-enabled water sampling, sediment coring, metabarcoding, metagenomics</p>
-                <!-- Button will be inserted here by JS -->
             </div>
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/dNsyfW5JZag" title="Aquatic Microbial Ecology" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -17,7 +16,7 @@
     </div>
 
     <!-- CARD 2 -->
-    <div class="research-video-card" id="research-card-2">
+    <div class="research-video-card">
         <h2>Explore microbial metabolisms in coastal systems</h2>
         <div class="video-text-grid reverse-on-desktop">
             <div class="box-text" data-original-html="2">
@@ -31,7 +30,7 @@
     </div>
 
     <!-- CARD 3 -->
-    <div class="research-video-card" id="research-card-3">
+    <div class="research-video-card">
         <h2>Track past changes in aquatic microbial functions</h2>
         <div class="video-text-grid">
             <div class="box-text" data-original-html="3">
@@ -46,7 +45,10 @@
 </div>
 
 <style>
-/* Additional styles to make the cards match your existing CSS */
+/* research page specific styles – wider on mobile, no inline script */
+.research-container {
+    max-width: 1400px;
+}
 .research-video-card {
     margin-bottom: 2rem;
     background: rgba(0, 0, 0, 0.5);
@@ -56,12 +58,10 @@
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-
 .research-video-card:hover {
     background: rgba(0, 0, 0, 0.6);
     transform: translateY(-3px);
 }
-
 .research-video-card > h2 {
     color: #6ab0d6;
     font-size: 1.6rem;
@@ -71,38 +71,30 @@
     border-bottom: 2px solid rgba(106, 176, 214, 0.3);
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
-
 .video-text-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
     padding: 2rem;
 }
-
 .video-text-grid.reverse-on-desktop {
     flex-direction: row-reverse;
 }
-
-/* text container with room for the button */
 .box-text {
     flex: 1;
     min-width: 240px;
     color: white;
     position: relative;
-    padding-bottom: 50px;   /* space for the toggle button */
+    padding-bottom: 50px;
 }
-
 .box-text p {
     line-height: 1.6;
     margin-bottom: 1rem;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
-
 .box-text p strong {
     color: #6ab0d6;
 }
-
-/* toggle button style (same as on home page) */
 .research-toggle-btn {
     position: absolute;
     bottom: 12px;
@@ -120,17 +112,14 @@
     transition: background 0.2s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
-
 .research-toggle-btn:hover {
     background: #e0a158;
 }
-
 .video-wrapper {
     flex: 1;
     min-width: 280px;
     aspect-ratio: 16 / 9;
 }
-
 .video-wrapper iframe {
     width: 100%;
     height: 100%;
@@ -138,22 +127,25 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     border: none;
 }
-
-/* responsive: stack on mobile, more padding for the button */
+/* Mobile adjustments: wider boxes, less side padding */
 @media (max-width: 768px) {
+    .research-container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
     .video-text-grid,
     .video-text-grid.reverse-on-desktop {
         flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
     }
     .research-video-card > h2 {
         font-size: 1.3rem;
-        padding: 1rem 1.5rem 0.3rem 1.5rem;
-    }
-    .video-text-grid {
-        padding: 1.5rem;
+        padding: 1rem 1rem 0.3rem 1rem;
     }
     .box-text {
         padding-bottom: 60px;
+        min-width: auto;
     }
     .research-toggle-btn {
         bottom: 16px;
@@ -161,68 +153,8 @@
         font-size: 0.85rem;
         padding: 6px 14px;
     }
+    .video-wrapper {
+        min-width: auto;
+    }
 }
 </style>
-
-<script>
-// Chinese translations for each card (preserving <strong> and line breaks)
-const chineseTexts = {
-    1: `<p>我们研究湖泊表层水和底层沉积物中活跃微生物层的微生物多样性。我们开发了一种无人机采样方法，为大量湖泊采集样本，并首次提供了瑞典湖泊微生物多样性的目录。</p>
-        <p><strong>方法：</strong> 无人机水质采样、沉积物岩芯采集、元条形码、宏基因组学</p>`,
-    2: `<p>由于气候变暖和营养盐污染，水体氧最小区正在扩大。我们研究微生物群落（细菌、古菌、原生生物）如何响应持续的脱氧过程。我们解析功能转变、代谢适应以及对生物地球化学循环（氮、硫、碳）的级联效应，以及神经毒素甲基汞的形成。</p>
-        <p><strong>方法：</strong> 水样采集、沉积物岩芯采集、元条形码、宏基因组学、基于基因组的宏转录组学</p>`,
-    3: `<p>我们利用沉积物古DNA（sedDNA）重建淡水与海洋微生物群落数百年至千年尺度的历史变化。通过分析沉积物中保存的遗传记录，揭示微生物组合如何响应气候变迁、富营养化、脱氧及其他环境压力。这一长期视角对于预测当前人为压力下的未来演变趋势至关重要。</p>
-        <p><strong>方法：</strong> 沉积物岩芯采集、古宏基因组学、系统发育基因组学</p>`
-};
-
-// Store original HTML and current language state for each card
-const cardStates = {};
-
-function initResearchPageTranslations() {
-    // Find all .box-text elements (one per card)
-    const boxes = document.querySelectorAll('.box-text');
-    boxes.forEach((box, idx) => {
-        // Use a unique key (data attribute or index)
-        const cardId = box.getAttribute('data-original-html') || idx;
-        
-        // Store original HTML
-        if (!cardStates[cardId]) {
-            cardStates[cardId] = {
-                original: box.innerHTML,
-                isChinese: false
-            };
-        }
-        
-        // Create the toggle button
-        const btn = document.createElement('button');
-        btn.className = 'research-toggle-btn';
-        btn.textContent = '中文';
-        btn.setAttribute('aria-label', 'Toggle Chinese/English');
-        
-        // Add click event
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const state = cardStates[cardId];
-            if (!state.isChinese) {
-                box.innerHTML = chineseTexts[cardId];
-                btn.textContent = 'ENG';
-                state.isChinese = true;
-            } else {
-                box.innerHTML = state.original;
-                btn.textContent = '中文';
-                state.isChinese = false;
-            }
-        });
-        
-        // Append button to the box
-        box.appendChild(btn);
-    });
-}
-
-// Run when the page is fully loaded (or after dynamic injection)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initResearchPageTranslations);
-} else {
-    initResearchPageTranslations();
-}
-</script>
