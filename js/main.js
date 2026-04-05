@@ -1,4 +1,4 @@
-// main.js (fully compatible with your existing news.html structure)
+// main.js – fully compatible with your existing structure
 // Data storage
 const siteData = {
     currentPage: 'home',
@@ -52,14 +52,11 @@ function renderModal() {
     }
 }
 
-// ----- Improved date parser (handles "October 2024" and "March 15, 2025") -----
+// Improved date parser
 function parseDateFlexible(dateStr) {
     if (!dateStr) return null;
-    // Try full date like "March 15, 2025" or "Oct 15, 2024"
     let parsed = new Date(dateStr);
     if (!isNaN(parsed.getTime())) return parsed;
-    
-    // Try "Month Year" format (e.g., "October 2024")
     const monthYearRegex = /(\w+)\s+(\d{4})/;
     const match = dateStr.match(monthYearRegex);
     if (match) {
@@ -72,33 +69,26 @@ function parseDateFlexible(dateStr) {
     return null;
 }
 
-// ----- Parse news from HTML (works with your .news-card structure) -----
+// Parse news from HTML
 function parseNewsItems(html) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const newsItems = [];
-    
-    // Select all .news-card elements (your exact structure)
     const cards = doc.querySelectorAll('.news-card');
     console.log(`Found ${cards.length} news cards in news.html`);
-    
     cards.forEach(card => {
         const dateElem = card.querySelector('.news-date');
         const titleElem = card.querySelector('.news-title');
         const summaryElem = card.querySelector('.news-summary');
         const imgElem = card.querySelector('.news-image');
-        
         if (dateElem && titleElem) {
             const date = dateElem.textContent.trim();
             const title = titleElem.textContent.trim();
             const summary = summaryElem ? summaryElem.textContent.trim() : 'Read more...';
             const imageUrl = imgElem ? imgElem.src : '';
-            
-            // Extract link if any (your read-more is a span, but we keep compatibility)
             let link = '';
             const readMoreLink = card.querySelector('a.read-more');
             if (readMoreLink && readMoreLink.href) link = readMoreLink.href;
-            
             newsItems.push({
                 date: date,
                 title: title,
@@ -108,8 +98,6 @@ function parseNewsItems(html) {
             });
         }
     });
-    
-    // Sort by date (most recent first)
     newsItems.sort((a,b) => {
         const dateA = parseDateFlexible(a.date);
         const dateB = parseDateFlexible(b.date);
@@ -118,7 +106,6 @@ function parseNewsItems(html) {
         if (dateB) return 1;
         return 0;
     });
-    
     console.log(`Parsed ${newsItems.length} news items`);
     return newsItems;
 }
@@ -133,10 +120,8 @@ async function loadPageContent(page) {
         if (!response.ok) throw new Error(`Failed to load ${page}.html`);
         const content = await response.text();
         siteData.pageContent[page] = content;
-        
         if (page === 'news') {
             siteData.newsItems = parseNewsItems(content);
-            // If parsing returns 0 items, use fallback (but your news.html has many)
             if (siteData.newsItems.length === 0) {
                 console.warn("No news items found, using fallback");
                 siteData.newsItems = getFallbackNews();
@@ -146,7 +131,6 @@ async function loadPageContent(page) {
     } catch (error) {
         console.error(error);
         if (page === 'news') {
-            // Fallback HTML that matches your structure
             const fallbackHtml = `<div class="news-grid">
                 <div class="news-card"><div class="news-date">March 2025</div><div class="news-title">New research grant</div><div class="news-summary">VR grant awarded</div></div>
                 <div class="news-card"><div class="news-date">February 2025</div><div class="news-title">New publication</div><div class="news-summary">ISME Journal paper</div></div>
@@ -183,7 +167,83 @@ function enhancePublications() {
     });
 }
 
-// Render home page with top 3 news items (using parsed newsItems)
+// ----- CHINESE TRANSLATION FEATURE (button inside .lab-intro-text) -----
+const chineseIntroTranslation = `我们研究水生微生物群落的时空动态及其对环境变化（如气候变化、富营养化、脱氧或汞污染）的功能响应。我们应用分子生态学方法，如元条形码、（古）宏基因组学、基于MAGs的分析和宏转录组学。通过对水柱和下方沉积物档案中的遗传信息进行测序，我们研究水生微生物生命的长期变化，以更好地理解它们当前和未来的发展轨迹。`;
+
+let translationTooltip = null;
+
+function getTranslationTooltip() {
+    if (!translationTooltip) {
+        translationTooltip = document.createElement('div');
+        translationTooltip.className = 'cn-translate-tooltip';
+        translationTooltip.textContent = chineseIntroTranslation;
+        document.body.appendChild(translationTooltip);
+        translationTooltip.style.display = 'none';
+    }
+    return translationTooltip;
+}
+
+function positionTooltipNearButton(btnRect, tooltip) {
+    const tooltipRect = tooltip.getBoundingClientRect();
+    let left = btnRect.left;
+    let top = btnRect.top - tooltipRect.height - 12;
+    
+    if (left + tooltipRect.width > window.innerWidth - 16) {
+        left = window.innerWidth - tooltipRect.width - 16;
+    }
+    if (left < 16) left = 16;
+    
+    if (top < 16) {
+        top = btnRect.bottom + 12;
+        tooltip.classList.add('tooltip-below');
+    } else {
+        tooltip.classList.remove('tooltip-below');
+    }
+    
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+}
+
+function showTranslationForButton(btn) {
+    const tooltip = getTranslationTooltip();
+    tooltip.textContent = chineseIntroTranslation;
+    tooltip.style.display = 'block';
+    tooltip.style.visibility = 'hidden';
+    positionTooltipNearButton(btn.getBoundingClientRect(), tooltip);
+    tooltip.style.visibility = 'visible';
+}
+
+function hideTranslationTooltip() {
+    if (translationTooltip) {
+        translationTooltip.style.display = 'none';
+    }
+}
+
+function initHomePageTranslation() {
+    const cnButton = document.querySelector('.cn-intro-btn');
+    if (!cnButton) return;
+    
+    // Remove old listeners to avoid duplicates
+    cnButton.removeEventListener('mouseenter', handleMouseEnter);
+    cnButton.removeEventListener('mouseleave', handleMouseLeave);
+    
+    function handleMouseEnter() { showTranslationForButton(cnButton); }
+    function handleMouseLeave() { hideTranslationTooltip(); }
+    
+    cnButton.addEventListener('mouseenter', handleMouseEnter);
+    cnButton.addEventListener('mouseleave', handleMouseLeave);
+    
+    const reposition = () => {
+        if (translationTooltip && translationTooltip.style.display === 'block') {
+            const btn = document.querySelector('.cn-intro-btn');
+            if (btn) positionTooltipNearButton(btn.getBoundingClientRect(), translationTooltip);
+        }
+    };
+    window.addEventListener('resize', reposition);
+    window.addEventListener('scroll', reposition, { passive: true });
+}
+
+// Render home page with top 3 news items AND the 中文 button inside .lab-intro-text
 function renderHome() {
     const topNews = siteData.newsItems.slice(0, 3);
     
@@ -220,6 +280,8 @@ function renderHome() {
         <div class="lab-intro">
             <div class="lab-intro-text">
                 <p>We study the spatio-temporal dynamics of <b>aquatic microbial communities</b> and their functional responses to environmental change, such as climate change, eutrophication, deoxygenation or mercury pollution. We apply <b>molecular ecology</b> methods, such as metabarcoding, (ancient) metagenomics, MAGs-based analysis and metatranscriptomics. By sequencing the genetic information from <b>water columns</b> and underlying <b>sedimentary archives</b>, we investigate the long-term changes in aquatic microbial life for a better understanding of their current and future trajectories</p>
+                <!-- 中文 button (Chinese language abbreviation) at bottom left of the text box -->
+                <button class="cn-intro-btn" aria-label="Show Chinese translation">中文</button>
             </div>
             <div class="lab-intro-image">
                 <img src="images/team2025.png" alt="Capo Lab Team 2025" onerror="this.src='https://via.placeholder.com/400x200?text=Lab+Photo'">
@@ -281,13 +343,15 @@ async function render() {
     let content = '';
     if (siteData.currentPage === 'home') {
         content = renderHome();
+        pageContainer.innerHTML = content;
+        // Attach translation hover to the 中文 button inside the intro box
+        initHomePageTranslation();
     } else {
         content = await loadPageContent(siteData.currentPage);
-    }
-    pageContainer.innerHTML = content;
-    
-    if (siteData.currentPage === 'publications') {
-        enhancePublications();
+        pageContainer.innerHTML = content;
+        if (siteData.currentPage === 'publications') {
+            enhancePublications();
+        }
     }
 }
 
