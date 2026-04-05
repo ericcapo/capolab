@@ -38,9 +38,11 @@
             z-index: 100;
         }
 
-        /* === CN BUTTON (now "中文") inside lab-intro-text === */
+        /* === TOGGLE BUTTON inside lab-intro-text, with safe padding === */
         .lab-intro-text {
-            position: relative;  /* needed for absolute positioning of the button */
+            position: relative;
+            /* Prevent button from overlapping text on small screens */
+            padding-bottom: 50px;   /* enough space for the button */
         }
 
         .cn-intro-btn {
@@ -62,6 +64,19 @@
         }
         .cn-intro-btn:hover {
             background: #e0a158;
+        }
+
+        /* Extra safety for very small screens */
+        @media (max-width: 480px) {
+            .lab-intro-text {
+                padding-bottom: 60px;
+            }
+            .cn-intro-btn {
+                bottom: 16px;
+                right: 16px;
+                font-size: 0.85rem;
+                padding: 6px 14px;
+            }
         }
     </style>
 </head>
