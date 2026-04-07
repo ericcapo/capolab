@@ -6,7 +6,14 @@
     <title>Capo Lab | Microbial Ecology</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* === ORIGINAL OVERRIDES + CAROUSEL + DETAIL PANEL === */
+        /* === GLOBAL RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* === ORIGINAL OVERRIDES === */
         .container {
             padding-top: 0 !important;
             margin-top: 0 !important;
@@ -68,10 +75,12 @@
             .cn-intro-btn { bottom: 16px; right: 16px; font-size: 0.85rem; padding: 6px 14px; }
         }
 
-        /* ---------- MICROMATES PAGE SPECIFIC STYLES ---------- */
+        /* ---------- MICROMATES PAGE SPECIFIC STYLES (all border-radius: 12px) ---------- */
         .micromates-wrapper {
             background: transparent;
         }
+
+        /* Game header box */
         .game-header {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -80,13 +89,15 @@
             margin-bottom: 2rem;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(4px);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 1.8rem;
         }
+
+        /* Text box inside header */
         .game-text-box {
             background: rgba(0, 0, 0, 0.5);
             padding: 1.5rem;
-            border-radius: 16px;
+            border-radius: 12px;
             border-left: 5px solid #6ab0d6;
         }
         .game-text-box h2 {
@@ -99,46 +110,64 @@
             line-height: 1.5;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
         }
-        .family-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 1rem 0;
-        }
-        .family-badge {
-            background: rgba(0,0,0,0.5);
-            padding: 0.3rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+
+        /* Rules box */
         .rules-box {
             background: rgba(0, 0, 0, 0.4);
             padding: 0.8rem 1rem;
-            border-radius: 20px;
+            border-radius: 12px;
             margin-top: 0.8rem;
         }
+
+        /* Right image */
         .game-right-img img {
             max-width: 100%;
-            border-radius: 20px;
+            border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             border: 2px solid rgba(106,176,214,0.5);
             max-height: 280px;
             object-fit: cover;
         }
-        .carousel-container {
+
+        /* Carousel box (new, with title) */
+        .carousel-box {
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(6px);
-            border-radius: 28px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1rem 1.5rem 1.5rem 1.5rem;
             margin: 1.5rem 0;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .carousel-title {
+            color: #ffd966;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: left;
+            padding-left: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* Inner carousel container (no extra background) */
+        .carousel-container {
+            background: transparent;
+            backdrop-filter: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
             overflow: hidden;
         }
+
         .carousel-wrapper {
             display: flex;
             align-items: center;
             gap: 1rem;
+            height: 100%;
         }
+
         .carousel-btn {
             background: #1e4a6e;
             border: none;
@@ -147,7 +176,7 @@
             font-weight: bold;
             width: 48px;
             height: 48px;
-            border-radius: 50%;
+            border-radius: 50%;  /* keep buttons round */
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
@@ -163,28 +192,32 @@
             opacity: 0.4;
             cursor: not-allowed;
         }
+
         .cards-scroll {
             flex: 1;
             overflow: hidden;
         }
+
         .cards-track {
             display: flex;
             gap: 1.2rem;
             transition: transform 0.4s ease-in-out;
             will-change: transform;
         }
+
+        /* Card items – fixed size, rounded corners */
         .card-item {
             flex: 0 0 auto;
-            width: 160px;                /* adjust as needed */
-            aspect-ratio: 3.5 / 2.5;    /* height = 3.5, width = 2.5 → 1.4 ratio */
+            width: 160px;
+            aspect-ratio: 3.5 / 2.5;   /* height : width = 3.5 : 2.5 */
             background: rgba(20, 28, 32, 0.8);
             backdrop-filter: blur(4px);
-            padding: 0;                  /* remove padding to make image fill exactly */
+            padding: 0;
             cursor: pointer;
             border: 2px solid rgba(106,176,214,0.2);
-            border-radius: 6px;          /* rounded corners */
-            overflow: hidden;            /* keeps image inside rounded corners */
-            }
+            border-radius: 12px;
+            overflow: hidden;
+        }
         .card-item.selected {
             border: 3px solid #ffd966;
             background: rgba(0, 0, 0, 0.85);
@@ -195,24 +228,20 @@
             transform: translateY(-6px);
             background: rgba(40, 55, 65, 0.9);
         }
+
         .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            border-radius: 6px;        
+            border-radius: 12px;  /* match card border-radius */
         }
-        .card-label {
-            margin-top: 0.6rem;
-            font-weight: 600;
-            font-size: 0.85rem;
-            color: #c9e2f0;
-        }
+
         /* Detail panel */
         .detail-panel {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(8px);
-            border-radius: 24px;
+            border-radius: 12px;
             padding: 1.5rem;
             margin-top: 1.5rem;
             display: grid;
@@ -221,26 +250,27 @@
             align-items: start;
             border: 1px solid rgba(106,176,214,0.4);
         }
+
         .detail-image img {
             width: 100%;
             max-width: 280px;
-            border-radius: 0px;
+            border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             background: #1a2a2f;
         }
-        .detail-text {
-            text-align: left;
-        }
+
         .detail-text h3 {
             color: #ffd966;
             font-size: 1.8rem;
             margin-bottom: 1rem;
         }
+
         .detail-description {
             text-align: justify;
             line-height: 1.6;
             margin-bottom: 1.2rem;
         }
+
         .detail-doi a {
             color: #6ab0d6;
             text-decoration: none;
@@ -254,11 +284,14 @@
             text-decoration: underline;
             color: #8bcbff;
         }
+
         .empty-detail {
             text-align: center;
             padding: 2rem;
             color: #aaa;
         }
+
+        /* Responsive */
         @media (max-width: 800px) {
             .game-header { grid-template-columns: 1fr; }
             .card-item { width: 120px; }
@@ -267,7 +300,6 @@
         }
         @media (max-width: 550px) {
             .card-item { width: 100px; }
-            .card-label { font-size: 0.7rem; }
         }
     </style>
 </head>
