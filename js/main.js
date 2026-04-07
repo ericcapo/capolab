@@ -214,7 +214,7 @@ function getCardImagePath(cardNumber) {
 function buildMicromatesHTML() {
     return `
         <div class="micromates-wrapper">
-            <h1 class="section-title">MicroMates – Oceanic Realms Card Game</h1>
+            <h1 class="section-title">MicroMates "Oceanic Realms" Card Game</h1>
             <div class="game-header">
                 <div class="game-text-box">
                     <p style="text-align: justify;">
@@ -223,7 +223,7 @@ function buildMicromatesHTML() {
                         If they have it, take it and continue; if not, draw 1 card from the pile. 
                         When you complete a realm (all 5 cards), show it and place it face up. 
                         First to collect <strong>3 complete realms</strong> wins!<br><br>
-                        <strong>Card categories (one per realm):</strong><br>
+                        <strong>Card categories</strong> (one per realm):<br>
                         <img src="images/others/yellow.png" alt="Light" style="height:1.2rem; vertical-align:middle;"> Light &nbsp;&nbsp;
                         <img src="images/others/pink.png" alt="Nitrogen" style="height:1.2rem; vertical-align:middle;"> Nitrogen &nbsp;&nbsp;
                         <img src="images/others/blue.png" alt="Sulfur" style="height:1.2rem; vertical-align:middle;"> Sulfur &nbsp;&nbsp;
