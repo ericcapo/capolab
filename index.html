@@ -188,10 +188,11 @@
         }
 
         .cards-scroll {
-            flex: 1;
             overflow: hidden;
+            padding-top: 12px;      /* space for the upward movement */
+            margin-top: -12px;      /* keep the visual position the same */
         }
-
+        
         .cards-track {
             display: flex;
             gap: 1.2rem;
