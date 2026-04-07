@@ -254,6 +254,51 @@ function buildMicromatesHTML() {
     `;
 }
 
+// Attach touchpad (wheel) and touch swipe events to the scroll container
+function attachCarouselSwipeEvents() {
+    const scrollContainer = document.querySelector('.cards-scroll');
+    if (!scrollContainer) return;
+    
+    let touchStartX = 0;
+    let isSwiping = false;
+    
+    // Laptop touchpad: horizontal scroll (deltaX)
+    scrollContainer.addEventListener('wheel', (e) => {
+        // Horizontal scroll OR vertical with Shift key
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
+            e.preventDefault();
+            if (e.deltaX > 0) {
+                moveCarousel('next');
+            } else if (e.deltaX < 0) {
+                moveCarousel('prev');
+            }
+        }
+    }, { passive: false });
+    
+    // Touch / mobile swipe
+    scrollContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isSwiping = true;
+    });
+    
+    scrollContainer.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        const deltaX = e.touches[0].clientX - touchStartX;
+        if (Math.abs(deltaX) > 30) { // threshold
+            if (deltaX > 0) {
+                moveCarousel('prev');
+            } else {
+                moveCarousel('next');
+            }
+            isSwiping = false;
+        }
+    });
+    
+    scrollContainer.addEventListener('touchend', () => {
+        isSwiping = false;
+    });
+}
+
 function renderCarouselTrack() {
     const track = document.getElementById('cardsTrack');
     if (!track) return;
@@ -371,19 +416,9 @@ async function loadCSVAndInit() {
         }
         TOTAL_CARDS = cardsData.length;
         if (TOTAL_CARDS !== 55) console.warn(`Expected 55 cards, got ${TOTAL_CARDS}`);
-        micromatesInitialized = false;
-        const container = document.querySelector('.micromates-wrapper');
-        if (container) {
-            renderCarouselTrack();
-            const prevBtn = document.getElementById('carouselPrev');
-            const nextBtn = document.getElementById('carouselNext');
-            if (prevBtn) prevBtn.addEventListener('click', () => moveCarousel('prev'));
-            if (nextBtn) nextBtn.addEventListener('click', () => moveCarousel('next'));
-            selectedCardIndex = 0;
-            renderCarouselTrack();
-            updateDetailPanel(0);
-        }
         micromatesInitialized = true;
+        // Build the UI from the loaded data
+        rebuildMicromatesCarousel();
     } catch (error) {
         console.error('Failed to load micromates.csv:', error);
         const container = document.querySelector('.micromates-wrapper');
@@ -393,11 +428,39 @@ async function loadCSVAndInit() {
     }
 }
 
+// Rebuild carousel UI after data is loaded or page is revisited
+function rebuildMicromatesCarousel() {
+    if (cardsData.length === 0) return;
+    currentCarouselOffset = 0;
+    selectedCardIndex = 0;
+    renderCarouselTrack();
+    // Attach button events
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    if (prevBtn) {
+        // remove old listeners to avoid duplicates
+        const newPrev = prevBtn.cloneNode(true);
+        prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+        newPrev.addEventListener('click', () => moveCarousel('prev'));
+    }
+    if (nextBtn) {
+        const newNext = nextBtn.cloneNode(true);
+        nextBtn.parentNode.replaceChild(newNext, nextBtn);
+        newNext.addEventListener('click', () => moveCarousel('next'));
+    }
+    // Attach swipe events
+    attachCarouselSwipeEvents();
+    updateDetailPanel(0);
+}
+
 function initMicromatesPage() {
-    if (micromatesInitialized) return;
-    setTimeout(() => {
+    if (micromatesInitialized && cardsData.length > 0) {
+        // Already loaded – just rebuild the carousel UI (in case DOM was recreated)
+        rebuildMicromatesCarousel();
+    } else {
+        // First time – load CSV then build
         loadCSVAndInit();
-    }, 50);
+    }
 }
 
 // ----- RENDER HOME -----
