@@ -225,7 +225,7 @@ function buildMicromatesHTML() {
                 </div>
             </div>
             <div class="carousel-box">
-                <h3 class="carousel-title">🎴 MicroMates cards</h3>
+                <h3 class="carousel-title">MicroMates "Oceanic Realms" collection</h3>
                 <div class="carousel-container" id="micromatesCarousel">
                     <div class="carousel-wrapper">
                         <button class="carousel-btn" id="carouselPrev">‹</button>
