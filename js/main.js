@@ -1,4 +1,4 @@
-// main.js – SPA with translation toggles + MicroMates (loads external micromates.html)
+// main.js – SPA with translation toggles + Micromates (loads card data from CSV)
 const siteData = {
     currentPage: 'home',
     activePhoto: null,
@@ -49,7 +49,7 @@ function renderModal() {
     }
 }
 
-// Date parser for news
+// News parsing
 function parseDateFlexible(dateStr) {
     if (!dateStr) return null;
     let parsed = new Date(dateStr);
@@ -197,51 +197,223 @@ function initResearchPageTranslations() {
     });
 }
 
-// ======================== MICROMATES MODULE (loads external micromates.html) ========================
+// ======================== MICROMATES MODULE (CSV data) ========================
 let micromatesInitialized = false;
+let currentCarouselOffset = 0;
+let TOTAL_CARDS = 0;
+const CARDS_VISIBLE = 5;
+const MOVE_STEP = 2;
+let selectedCardIndex = 0;
+let cardsData = []; // will hold objects from CSV
 
-function buildMicromatesHTML() {
-    // Placeholder while loading
-    return `<div class="micromates-wrapper" style="text-align:center; padding:3rem;">Loading MicroMates game... <br> If this takes too long, check that <strong>micromates.html</strong> exists in the root folder.</div>`;
+function getCardImagePath(cardNumber) {
+    const padded = String(cardNumber).padStart(2, '0');
+    return `images/mates/mates${padded}.jpg`;
 }
 
-async function initMicromatesPage() {
-    if (micromatesInitialized) return;
-    const container = document.querySelector('.micromates-wrapper');
-    if (!container) return;
-    try {
-        const response = await fetch('micromates.html');
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const gameContent = doc.querySelector('.micromates-container');
-        if (gameContent) {
-            // Replace the wrapper content with the loaded game
-            container.innerHTML = gameContent.innerHTML;
-            // Extract and execute any <script> tags inside the loaded content
-            const scripts = gameContent.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                if (oldScript.src) {
-                    newScript.src = oldScript.src;
-                } else {
-                    newScript.textContent = oldScript.textContent;
-                }
-                document.body.appendChild(newScript);
-                document.body.removeChild(newScript);
-            });
-        } else {
-            container.innerHTML = '<p style="color:#ff8888;">Error: Could not find .micromates-container in micromates.html. Please check the file structure.</p>';
-        }
-        micromatesInitialized = true;
-    } catch (error) {
-        console.error('Failed to load micromates.html:', error);
-        container.innerHTML = `<p style="color:#ff8888;">❌ Failed to load MicroMates. Make sure <strong>micromates.html</strong> is in the same folder as index.html.</p>`;
+function buildMicromatesHTML() {
+    return `
+        <div class="micromates-wrapper">
+            <div class="game-header">
+                <div class="game-text-box">
+                    <h2>🎴 MicroMates – Marine Realms Card Game</h2>
+                    <p><strong>How to play:</strong> Collect all 5 cards of a realm. Ask another player: “Do you have <em>Baltic Cyanobacteria</em> from the <strong>Baltic Sea realm</strong>?” If yes, take it and go again; if not, draw from the pile. First to collect <strong>3 complete realms</strong> wins!</p>
+                    <div class="family-list" id="realmList"></div>
+                    <div class="rules-box">
+                        <strong>🎯 Quick rules (2–6 players):</strong> Shuffle all 55 cards. Deal 7 cards each. Youngest starts. On your turn, ask any player for a card from a realm you already own. If they have it, take it and continue; if not, draw 1 card from the pile. When you complete a realm (all 5 cards), show it and place it face up. First to collect 3 realms wins!
+                    </div>
+                    <p><em>👇 <strong>Click any card</strong> to see its enlarged image, description and DOI link.</em></p>
+                </div>
+                <div class="game-right-img">
+                    <img src="images/mates/micromates.jpg" alt="MicroMates logo" onerror="this.src='https://placehold.co/500x300?text=MicroMates'">
+                </div>
+            </div>
+            <div class="carousel-container" id="micromatesCarousel">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn" id="carouselPrev">‹</button>
+                    <div class="cards-scroll">
+                        <div class="cards-track" id="cardsTrack"></div>
+                    </div>
+                    <button class="carousel-btn" id="carouselNext">›</button>
+                </div>
+            </div>
+            <div id="detailPanel" class="detail-panel">
+                <div class="empty-detail">✨ Click on any card above to see its details ✨</div>
+            </div>
+        </div>
+    `;
+}
+
+function renderCarouselTrack() {
+    const track = document.getElementById('cardsTrack');
+    if (!track) return;
+    let html = '';
+    for (let i = 0; i < TOTAL_CARDS; i++) {
+        const cardNum = i + 1;
+        const imgPath = getCardImagePath(cardNum);
+        const isSelected = (selectedCardIndex === i);
+        html += `
+            <div class="card-item ${isSelected ? 'selected' : ''}" data-card-index="${i}">
+                <img src="${imgPath}" class="card-img" onerror="this.src='https://placehold.co/160x240?text=Card+${cardNum}'">
+                <div class="card-label">${cardsData[i].mate_name}</div>
+            </div>
+        `;
+    }
+    track.innerHTML = html;
+    document.querySelectorAll('.card-item').forEach(card => {
+        const idx = parseInt(card.dataset.cardIndex);
+        card.addEventListener('click', () => {
+            selectedCardIndex = idx;
+            renderCarouselTrack();
+            updateCarouselPosition();
+            updateDetailPanel(selectedCardIndex);
+        });
+    });
+    updateCarouselPosition();
+}
+
+function updateCarouselPosition() {
+    const track = document.getElementById('cardsTrack');
+    if (!track) return;
+    const cardWidth = 160 + 12;
+    const maxStartIndex = Math.max(0, TOTAL_CARDS - CARDS_VISIBLE);
+    let newOffset = currentCarouselOffset;
+    if (newOffset > maxStartIndex) newOffset = maxStartIndex;
+    if (newOffset < 0) newOffset = 0;
+    currentCarouselOffset = newOffset;
+    const translateX = - (currentCarouselOffset * cardWidth);
+    track.style.transform = `translateX(${translateX}px)`;
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    if (prevBtn) prevBtn.disabled = (currentCarouselOffset === 0);
+    if (nextBtn) nextBtn.disabled = (currentCarouselOffset >= maxStartIndex);
+}
+
+function moveCarousel(direction) {
+    const maxStart = Math.max(0, TOTAL_CARDS - CARDS_VISIBLE);
+    if (direction === 'prev') {
+        currentCarouselOffset = Math.max(0, currentCarouselOffset - MOVE_STEP);
+    } else if (direction === 'next') {
+        currentCarouselOffset = Math.min(maxStart, currentCarouselOffset + MOVE_STEP);
+    }
+    updateCarouselPosition();
+}
+
+function updateDetailPanel(cardIdx) {
+    const panel = document.getElementById('detailPanel');
+    if (!panel) return;
+    const card = cardsData[cardIdx];
+    const cardNum = cardIdx + 1;
+    const imgSrc = getCardImagePath(cardNum);
+    const doiLink = card.doi ? `https://doi.org/${card.doi}` : '#';
+    const webLink = card.weblink ? card.weblink : doiLink;
+    panel.innerHTML = `
+        <div class="detail-image">
+            <img src="${imgSrc}" alt="${card.mate_name}" onerror="this.src='https://placehold.co/280x420?text=Card+${cardNum}'">
+        </div>
+        <div class="detail-text">
+            <h3>${card.mate_name} <span style="font-size:1rem;">(#${cardNum})</span></h3>
+            <div class="detail-description"><strong>${card.mate_function}</strong><br>${card.description}</div>
+            <div class="detail-doi">
+                <strong>Reference:</strong> <a href="${webLink}" target="_blank" rel="noopener noreferrer">doi:${card.doi || 'no DOI'}</a>
+            </div>
+        </div>
+    `;
+}
+
+function populateRealmBadges() {
+    const realmMap = new Map();
+    cardsData.forEach(card => {
+        if (!realmMap.has(card.location)) realmMap.set(card.location, 0);
+        realmMap.set(card.location, realmMap.get(card.location) + 1);
+    });
+    const realmListDiv = document.getElementById('realmList');
+    if (!realmListDiv) return;
+    realmListDiv.innerHTML = '';
+    const colors = ['#FFD966','#FF99CC','#66CCFF','#88FF88','#CC99FF','#FF8888','#99CCFF','#B0E0E6','#FFB347','#77AADD','#DD88FF'];
+    let idx = 0;
+    for (let [realm, count] of realmMap) {
+        const badge = document.createElement('span');
+        badge.className = 'family-badge';
+        badge.style.borderLeft = `4px solid ${colors[idx % colors.length]}`;
+        badge.textContent = `${realm} (${count} cards)`;
+        realmListDiv.appendChild(badge);
+        idx++;
     }
 }
 
-// ----- RENDER HOME (full original content) -----
+// Simple CSV parser that handles quoted fields
+function parseCSV(csvText) {
+    const rows = [];
+    const regex = /(?:,|^)(?:"([^"]*(?:""[^"]*)*)"|([^",]*))/g;
+    let lines = csvText.split(/\r?\n/);
+    for (let line of lines) {
+        if (line.trim() === '') continue;
+        let row = [];
+        let match;
+        while ((match = regex.exec(line)) !== null) {
+            row.push(match[1] !== undefined ? match[1].replace(/""/g, '"') : (match[2] || ''));
+        }
+        if (row.length > 0) rows.push(row);
+        regex.lastIndex = 0;
+    }
+    return rows;
+}
+
+async function loadCSVAndInit() {
+    try {
+        const response = await fetch('micromates.csv');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+        if (rows.length < 2) throw new Error('CSV has no data rows');
+        const headers = rows[0];
+        cardsData = [];
+        for (let i = 1; i < rows.length; i++) {
+            const cols = rows[i];
+            if (cols.length < 6) continue;
+            cardsData.push({
+                location: cols[0],
+                mate_name: cols[1],
+                mate_function: cols[2],
+                description: cols[3],
+                doi: cols[4],
+                weblink: cols[5]
+            });
+        }
+        TOTAL_CARDS = cardsData.length;
+        if (TOTAL_CARDS !== 55) console.warn(`Expected 55 cards, got ${TOTAL_CARDS}`);
+        micromatesInitialized = false;
+        const container = document.querySelector('.micromates-wrapper');
+        if (container) {
+            renderCarouselTrack();
+            const prevBtn = document.getElementById('carouselPrev');
+            const nextBtn = document.getElementById('carouselNext');
+            if (prevBtn) prevBtn.addEventListener('click', () => moveCarousel('prev'));
+            if (nextBtn) nextBtn.addEventListener('click', () => moveCarousel('next'));
+            selectedCardIndex = 0;
+            renderCarouselTrack();
+            updateDetailPanel(0);
+            populateRealmBadges();
+        }
+        micromatesInitialized = true;
+    } catch (error) {
+        console.error('Failed to load micromates.csv:', error);
+        const container = document.querySelector('.micromates-wrapper');
+        if (container) {
+            container.innerHTML = '<p style="color:#ff8888; text-align:center;">❌ Failed to load card data. Make sure <strong>micromates.csv</strong> exists in the root folder.</p>';
+        }
+    }
+}
+
+function initMicromatesPage() {
+    if (micromatesInitialized) return;
+    setTimeout(() => {
+        loadCSVAndInit();
+    }, 50);
+}
+
+// ----- RENDER HOME -----
 function renderHome() {
     const topNews = siteData.newsItems.slice(0, 3);
     const newsHtml = topNews.length > 0 ? topNews.map(news => `
@@ -297,9 +469,9 @@ async function render() {
                 <ul class="nav-links">
                     <li><a href="#" data-page="home" onclick="navigateTo('home'); return false;">Home</a></li>
                     <li><a href="#" data-page="research" onclick="navigateTo('research'); return false;">Research</a></li>
+                    <li><a href="#" data-page="micromates" onclick="navigateTo('micromates'); return false;">MicroMates</a></li>
                     <li><a href="#" data-page="team" onclick="navigateTo('team'); return false;">Team</a></li>
                     <li><a href="#" data-page="news" onclick="navigateTo('news'); return false;">News</a></li>
-                    <li><a href="#" data-page="micromates" onclick="navigateTo('micromates'); return false;">MicroMates</a></li>
                     <li><a href="#" data-page="publications" onclick="navigateTo('publications'); return false;">Publications</a></li>
                 </ul>
             </div>
@@ -340,7 +512,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 });
 
-// Attach globals
 window.navigateTo = navigateTo;
 window.closeModal = closeModal;
 window.openModal = openModal;
