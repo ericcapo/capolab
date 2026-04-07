@@ -6,7 +6,7 @@
     <title>Capo Lab | Microbial Ecology</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* === ORIGINAL OVERRIDES (keep layout tight) === */
+        /* === ORIGINAL OVERRIDES + CAROUSEL ENHANCEMENTS === */
         .container {
             padding-top: 0 !important;
             margin-top: 0 !important;
@@ -38,13 +38,11 @@
             z-index: 100;
         }
 
-        /* === TOGGLE BUTTON inside lab-intro-text, with safe padding === */
+        /* Toggle button inside lab-intro-text */
         .lab-intro-text {
             position: relative;
-            /* Prevent button from overlapping text on small screens */
-            padding-bottom: 50px;   /* enough space for the button */
+            padding-bottom: 50px;
         }
-
         .cn-intro-btn {
             position: absolute;
             bottom: 12px;
@@ -65,18 +63,196 @@
         .cn-intro-btn:hover {
             background: black;
         }
-
-        /* Extra safety for very small screens */
         @media (max-width: 480px) {
-            .lab-intro-text {
-                padding-bottom: 60px;
-            }
-            .cn-intro-btn {
-                bottom: 16px;
-                right: 16px;
-                font-size: 0.85rem;
-                padding: 6px 14px;
-            }
+            .lab-intro-text { padding-bottom: 60px; }
+            .cn-intro-btn { bottom: 16px; right: 16px; font-size: 0.85rem; padding: 6px 14px; }
+        }
+
+        /* ---------- MICROMATES PAGE SPECIFIC STYLES (larger cards, no radius, smooth carousel) ---------- */
+        .micromates-wrapper {
+            background: transparent;
+        }
+        .game-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 20px;
+            padding: 1.8rem;
+        }
+        .game-text-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-left: 5px solid #6ab0d6;
+        }
+        .game-text-box h2 {
+            color: #6ab0d6;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .game-text-box p {
+            color: white;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+        .game-right-img img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 2px solid rgba(106,176,214,0.5);
+            max-height: 280px;
+            object-fit: cover;
+        }
+        /* carousel container with smooth sliding */
+        .carousel-container {
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            border-radius: 28px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        .carousel-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .carousel-btn {
+            background: #1e4a6e;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .carousel-btn:hover:not(:disabled) {
+            background: #0e3a5a;
+            transform: scale(1.05);
+        }
+        .carousel-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .cards-scroll {
+            flex: 1;
+            overflow: hidden;
+        }
+        .cards-track {
+            display: flex;
+            gap: 1.2rem;
+            transition: transform 0.4s ease-in-out;
+            will-change: transform;
+        }
+        /* larger cards, NO border-radius */
+        .card-item {
+            flex: 0 0 auto;
+            width: 160px;
+            background: rgba(20, 28, 32, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border: 2px solid rgba(106,176,214,0.2);
+            border-radius: 0px;   /* no radius */
+        }
+        .card-item.selected {
+            border: 3px solid #ffd966;
+            background: rgba(0, 0, 0, 0.85);
+            transform: scale(1.02);
+            box-shadow: 0 0 14px rgba(255,217,102,0.5);
+        }
+        .card-item:hover {
+            transform: translateY(-6px);
+            background: rgba(40, 55, 65, 0.9);
+        }
+        .card-img {
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            background: #1e2a2f;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border-radius: 0px;   /* no radius on images either */
+        }
+        .card-label {
+            margin-top: 0.6rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #c9e2f0;
+        }
+        .info-btn-container {
+            text-align: center;
+            margin: 2rem 0 0.5rem;
+        }
+        .btn-card-info {
+            background: #2c7da0;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-card-info:hover {
+            background: #1f5e7a;
+            transform: scale(1.02);
+        }
+        /* modal for card details (same style as site modal) */
+        .card-info-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            justify-content: center;
+            align-items: center;
+        }
+        .card-info-modal.active {
+            display: flex;
+        }
+        .info-modal-content {
+            background: rgba(10, 20, 28, 0.95);
+            max-width: 500px;
+            width: 90%;
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid #6ab0d6;
+            text-align: center;
+        }
+        .info-modal-content h3 {
+            color: #ffd966;
+            margin-bottom: 1rem;
+        }
+        .close-info-modal {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        @media (max-width: 800px) {
+            .game-header { grid-template-columns: 1fr; }
+            .card-item { width: 120px; }
+        }
+        @media (max-width: 550px) {
+            .card-item { width: 100px; }
+            .card-label { font-size: 0.7rem; }
         }
     </style>
 </head>
