@@ -224,34 +224,6 @@ function buildMicromatesHTML() {
                     <img src="images/mates/micromates.png" alt="MicroMates logo" onerror="this.src='https://placehold.co/500x300?text=MicroMates'">
                 </div>
             </div>
-
-            <div class="carousel-box">
-                <h3 class="carousel-title">MicroMates cards</h3>
-                <div class="carousel-container" id="micromatesCarousel">
-                    <div class="carousel-wrapper">
-                        <button class="carousel-btn" id="carouselPrev">‹</button>
-                        <div class="cards-scroll">
-                            <div class="cards-track" id="cardsTrack"></div>
-                        </div>
-                        <button class="carousel-btn" id="carouselNext">›</button>
-                    </div>
-                </div>
-            </div>
-            function buildMicromatesHTML() {
-    return `
-        <div class="micromates-wrapper">
-            <h1 class="section-title">MicroMates – Oceanic Realms Card Game</h1>
-            <div class="game-header">
-                <div class="game-text-box">
-                    <p><strong>How to play:</strong> Collect all 5 cards of a realm. Ask another player: “Do you have <em>Baltic Cyanobacteria</em> from the <strong>Baltic Sea realm</strong>?” If yes, take it and go again; if not, draw from the pile. First to collect <strong>3 complete realms</strong> wins!</p>
-                    <p><strong>Rules (2–6 players):</strong> Shuffle all 55 cards. Deal 7 cards each. Youngest starts. On your turn, ask any player for a card from a realm you already own. If they have it, take it and continue; if not, draw 1 card from the pile. When you complete a realm (all 5 cards), show it and place it face up. First to collect 3 realms wins!</p>
-                </div>
-                <div class="game-right-img">
-                    <img src="images/mates/micromates.png" alt="MicroMates logo" onerror="this.src='https://placehold.co/500x300?text=MicroMates'">
-                </div>
-            </div>
-
-            <!-- NEW BOX WITH TITLE AND HIGHER HEIGHT -->
             <div class="carousel-box">
                 <h3 class="carousel-title">🎴 MicroMates cards</h3>
                 <div class="carousel-container" id="micromatesCarousel">
@@ -264,13 +236,9 @@ function buildMicromatesHTML() {
                     </div>
                 </div>
             </div>
-
             <div id="detailPanel" class="detail-panel">
                 <div class="empty-detail">✨ Click on any card above to see its details ✨</div>
             </div>
-        </div>
-    `;
-}
         </div>
     `;
 }
@@ -477,9 +445,9 @@ async function render() {
                 <ul class="nav-links">
                     <li><a href="#" data-page="home" onclick="navigateTo('home'); return false;">Home</a></li>
                     <li><a href="#" data-page="research" onclick="navigateTo('research'); return false;">Research</a></li>
+                    <li><a href="#" data-page="micromates" onclick="navigateTo('micromates'); return false;">MicroMates</a></li>
                     <li><a href="#" data-page="team" onclick="navigateTo('team'); return false;">Team</a></li>
                     <li><a href="#" data-page="news" onclick="navigateTo('news'); return false;">News</a></li>
-                    <li><a href="#" data-page="micromates" onclick="navigateTo('micromates'); return false;">MicroMates</a></li>
                     <li><a href="#" data-page="publications" onclick="navigateTo('publications'); return false;">Publications</a></li>
                 </ul>
             </div>
