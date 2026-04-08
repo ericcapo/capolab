@@ -198,6 +198,8 @@
             gap: 1.2rem;
             transition: transform 0.4s ease-in-out;
             will-change: transform;
+            overflow: visible;        /* allow border to show */
+            padding: 4px 0;   
         }
         
         .card-item {
@@ -211,12 +213,16 @@
             border: 2px solid rgba(106,176,214,0.2);
             border-radius: 4px;
             overflow: hidden;
+            box-sizing: border-box;   /* border included in width/height */
+            border: 3px solid transparent;  /* reserve space for highlight */
+            transition: border-color 0.2s;
+            
         }
         .card-item.selected {
-            border: 3px solid #ffd966;
+            border-color: #ffcc00;  
             background: rgba(0, 0, 0, 0.85);
             transform: scale(1.02);
-            box-shadow: 0 0 14px rgba(255,217,102,0.5);
+            box-shadow: 0 0 8px rgba(255,204,0,0.5);
         }
         .card-item:hover {
             transform: translateY(-6px);
@@ -232,21 +238,26 @@
         }
 
         .detail-panel {
+            max-width: 700px; 
+            margin: 2rem auto; 
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(8px);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             margin-top: 1.5rem;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
+            display: flex;
+            gap: 1.5rem;
             align-items: start;
             border: 1px solid rgba(106,176,214,0.4);
         }
 
+        .detail-image {
+            flex: 0 0 180px;      
+         }   
         .detail-image img {
             width: 100%;
             max-width: 280px;
+            height: auto;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             background: #1a2a2f;
