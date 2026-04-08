@@ -230,7 +230,7 @@ function buildMicromatesHTML() {
             <div class="game-header">
                 <div class="game-text-box">
                     <p style="text-align: justify;">
-                    <h1 class="section-title">MicroMates Oceanic Realms</h1>
+                    <h3 class="section-title">MicroMates Oceanic Realms</h3>
                         <strong>How to play (2–6 players):</strong> Shuffle all 55 cards. Deal 7 cards each. Youngest starts. 
                         On your turn, ask any player for a card from a realm you already own. 
                         If they have it, take it and continue; if not, draw 1 card from the pile. 
