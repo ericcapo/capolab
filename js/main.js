@@ -229,14 +229,14 @@ function buildMicromatesHTML() {
             <h1 class="section-title">MicroMates Card Game</h1>
             <div class="game-header">
                 <div class="game-text-box">
-                    <p style="text-align: justify;">
+                    
                     <h3 class="section-title">MicroMates Oceanic Realms</h3>
-                        <strong>How to play (2–6 players):</strong> Shuffle all 55 cards. Deal 7 cards each. Youngest starts. 
-                        On your turn, ask any player for a card from a realm you already own. 
+                        <p style="text-align: justify;"><strong>How to play</strong> (2–6 players): Shuffle all 55 cards. Deal 7 cards each. Youngest starts. 
+                        On your turn, ask any player for a card from a realm (Baltic Sea, Cariaco Basin,...) you already own. 
                         If they have it, take it and continue; if not, draw 1 card from the pile. 
-                        When you complete a realm (all 5 cards), show it and place it face up. 
+                        When you complete a realm (5 card types), show it and place it face up. 
                         First to collect <strong>3 complete realms</strong> wins!<br><br>
-                        <strong>Card categories</strong> (one per realm):<br>
+                        <strong>Card types</strong> (one per realm):<br>
                         <img src="images/others/yellow.png" alt="Light" style="height:1.2rem; vertical-align:middle;"> Light &nbsp;&nbsp;
                         <img src="images/others/pink.png" alt="Nitrogen" style="height:1.2rem; vertical-align:middle;"> Nitrogen &nbsp;&nbsp;
                         <img src="images/others/blue.png" alt="Sulfur" style="height:1.2rem; vertical-align:middle;"> Sulfur &nbsp;&nbsp;
