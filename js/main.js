@@ -224,7 +224,7 @@ function getCardImagePath(cardNumber) {
 }
 
 function buildMicromatesHTML() {
-    // Injected responsive CSS for mobile improvements
+    // Injected responsive CSS for mobile improvements + restored original dark detail panel
     const responsiveCSS = `
     <style>
         /* Make carousel cards bigger on mobile while fitting the view */
@@ -268,14 +268,15 @@ function buildMicromatesHTML() {
             }
             .mate-location {
                 text-align: center;
+                font-size: 1.1rem !important;
                 margin-bottom: 0.5rem;
             }
         }
-        /* Shared detail panel styles */
+        /* Shared detail panel styles - restored original dark/transparent background */
         .detail-panel {
             display: flex;
             gap: 2rem;
-            background: #f8f9fa;
+            background: transparent;  /* original - no white background */
             border-radius: 20px;
             padding: 1.5rem;
             margin-top: 2rem;
@@ -296,26 +297,32 @@ function buildMicromatesHTML() {
         }
         .detail-text h3 {
             margin: 0 0 0.25rem 0;
-            color: #2c3e66;
+            color: white;  /* white text for mate name */
         }
         .mate-location {
-            font-size: 1rem;
-            color: #6c757d;
+            font-size: 1.2rem;   /* bigger than before */
+            font-weight: 500;
+            color: white;        /* white text */
             margin-bottom: 1rem;
-            font-style: italic;
+            font-style: normal;
         }
         .detail-description {
             margin: 1rem 0;
             line-height: 1.5;
+            color: #f0f0f0;     /* light gray for readability on dark */
         }
         .detail-doi {
             font-size: 0.85rem;
             word-break: break-word;
+            color: #cccccc;
+        }
+        .detail-doi a {
+            color: #6ab0d6;
         }
         .empty-detail {
             text-align: center;
             padding: 2rem;
-            color: #6c757d;
+            color: #cccccc;
         }
     </style>
     `;
@@ -529,7 +536,7 @@ function centerOnCard(cardOriginalIndex) {
     updateCarouselPosition(false);
 }
 
-// Updated detail panel: mate_name + location (no card number)
+// Updated detail panel: mate_name + "Realm:" + location (no pin, no card number)
 function updateDetailPanel(cardIdx) {
     const panel = document.getElementById('detailPanel');
     if (!panel) return;
@@ -544,7 +551,7 @@ function updateDetailPanel(cardIdx) {
         </div>
         <div class="detail-text">
             <h3>${escapeHtml(card.mate_name)}</h3>
-            <div class="mate-location">📍 ${escapeHtml(card.location)}</div>
+            <div class="mate-location"><strong>Realm:</strong> ${escapeHtml(card.location)}</div>
             <div class="detail-description"><strong>${escapeHtml(card.mate_function)}</strong><br>${escapeHtml(card.description)}</div>
             <div class="detail-doi">
                 <strong>Reference:</strong> <a href="${escapeHtml(webLink)}" target="_blank" rel="noopener noreferrer">doi:${escapeHtml(card.doi || 'no DOI')}</a>
