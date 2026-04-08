@@ -224,8 +224,104 @@ function getCardImagePath(cardNumber) {
 }
 
 function buildMicromatesHTML() {
+    // Injected responsive CSS for mobile improvements
+    const responsiveCSS = `
+    <style>
+        /* Make carousel cards bigger on mobile while fitting the view */
+        @media (max-width: 768px) {
+            .cards-track {
+                gap: 12px;
+            }
+            .card-item {
+                width: 140px !important;
+                flex-shrink: 0;
+            }
+            .card-img {
+                width: 100%;
+                height: auto;
+                border-radius: 12px;
+            }
+            .carousel-wrapper {
+                padding: 0 5px;
+            }
+            /* Detail panel mobile layout */
+            .detail-panel {
+                flex-direction: column !important;
+                padding: 1rem !important;
+            }
+            .detail-image {
+                max-width: 100% !important;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .detail-image img {
+                max-width: 80%;
+                height: auto;
+            }
+            .detail-text {
+                padding-left: 0 !important;
+                width: 100% !important;
+            }
+            .detail-text h3 {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+            .mate-location {
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+        }
+        /* Shared detail panel styles */
+        .detail-panel {
+            display: flex;
+            gap: 2rem;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            align-items: flex-start;
+        }
+        .detail-image {
+            flex: 1;
+            max-width: 280px;
+        }
+        .detail-image img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .detail-text {
+            flex: 2;
+            padding-left: 1rem;
+        }
+        .detail-text h3 {
+            margin: 0 0 0.25rem 0;
+            color: #2c3e66;
+        }
+        .mate-location {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .detail-description {
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+        .detail-doi {
+            font-size: 0.85rem;
+            word-break: break-word;
+        }
+        .empty-detail {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+    </style>
+    `;
     return `
         <div class="micromates-wrapper">
+            ${responsiveCSS}
             <h1 class="section-title">MicroMates<sup>™</sup> Card Game</h1>
             <div class="game-header">
                 <div class="game-text-box" style="padding-top: 0;">
@@ -276,7 +372,6 @@ function buildMicromatesHTML() {
         </div>
     `;
 }
-
 
 // Attach touchpad and touch swipe events
 function attachCarouselSwipeEvents() {
@@ -434,20 +529,22 @@ function centerOnCard(cardOriginalIndex) {
     updateCarouselPosition(false);
 }
 
+// Updated detail panel: mate_name + location (no card number)
 function updateDetailPanel(cardIdx) {
     const panel = document.getElementById('detailPanel');
     if (!panel) return;
     const card = cardsData[cardIdx];
-    const cardNum = cardIdx + 1;
-    const imgSrc = getCardImagePath(cardNum);
+    const imgSrc = getCardImagePath(cardIdx + 1);
     const doiLink = card.doi ? `https://doi.org/${card.doi}` : '#';
     const webLink = card.weblink ? card.weblink : doiLink;
+    
     panel.innerHTML = `
         <div class="detail-image">
-            <img src="${imgSrc}" alt="${card.mate_name}" onerror="this.src='https://placehold.co/280x420?text=Card+${cardNum}'">
+            <img src="${imgSrc}" alt="${escapeHtml(card.mate_name)}" onerror="this.src='https://placehold.co/280x420?text=Card'">
         </div>
         <div class="detail-text">
-            <h3>${escapeHtml(card.mate_name)} <span style="font-size:1rem;">(#${cardNum})</span></h3>
+            <h3>${escapeHtml(card.mate_name)}</h3>
+            <div class="mate-location">📍 ${escapeHtml(card.location)}</div>
             <div class="detail-description"><strong>${escapeHtml(card.mate_function)}</strong><br>${escapeHtml(card.description)}</div>
             <div class="detail-doi">
                 <strong>Reference:</strong> <a href="${escapeHtml(webLink)}" target="_blank" rel="noopener noreferrer">doi:${escapeHtml(card.doi || 'no DOI')}</a>
