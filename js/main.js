@@ -267,12 +267,7 @@ function buildMicromatesHTML() {
             <div class="game-header history-section" style="margin-top: 2rem;">
                 <div class="game-text-box">
                     <h3 class="section-title">The Story Behind MicroMates</h3>
-                    <p style="text-align: justify;"> MicroMates was born in 2024 from a passion for both microbiology and card gaming. The idea came after a seminar at Umeå University by Klaus Jürgens when researchers realised that the incredible diversity of microbial metabolism – from light‑harvesting to sulfur cycling – could be turned into a fun, educational card game. Each card represents a real organism, carefully illustrated and linked to scientific references. Today, MicroMates is showed in outreach events and at conferences to spark curiosity about the hidden world of microbes. This card game is developed by Eric Capo and Meifang Zhong from Umeå University (Umeå, Sweden), and the artist Thomas Cerigny from Mikimo studio (Bordeaux, France).
-                    </p>
-                    <p style="text-align: justify; margin-top: 1rem;">
-                        <strong>Version 1.0</strong> – 55 cards, 11 realms, endless strategies. 
-                        Stay tuned for expansion packs featuring deep‑sea vents and polar microbiomes!
-                    </p>
+                    <p style="text-align: justify;"> The idea of the MicroMates card game came in 2024 after a seminar by Klaus Jürgens at Umeå University when researchers realised that the incredible diversity of microbial metabolisms could be turned into a fun, educational card game. Each card represents a real microorganism, carefully illustrated and linked to scientific references. This card game is developed by Eric Capo and Meifang Zhong from Umeå University (Umeå, Sweden), and the artist Thomas Cerigny from Mikimo studio (Bordeaux, France).</p>
                 </div>
                 <div class="game-right-img">
                     <img src="images/mates/history.jpg" alt="History of MicroMates" onerror="this.src='https://placehold.co/500x300?text=History+of+MicroMates'">
