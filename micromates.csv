@@ -12,43 +12,44 @@ Black Sea,Ferrious,Iron-reducing bacteria,Ferrious (Shewanella putrefaciens MR9)
 California Coast,Tricky,Oxygenic phototrophic bacteria,Tricky (Trichodesmium spp.) was detected by epifluorescence microscopy within the warmer waters of the California Coast in the summer of 2008.,10.1016/j.pocean.2012.09.002,https://doi.org/10.1016/j.pocean.2012.09.002
 California Coast,Nitroman,Nitrifying bacteria,Nitroman (Nitrospina) was found with molecular methods in July and August of 2008 in the southern Gulf of California.,10.1038/ismej.2013.96,https://doi.org/10.1038/ismej.2013.96
 California Coast,Globulus,Denitrifying sulfur-oxidizing bacteria,Globulus (SUP05 Thioglobus) was found,10.3389/fmicb.2015.00334,https://doi.org/10.3389/fmicb.2015.00334
-California Coast,Methanor,Methanogenic archaea,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/ismej.2017.6,https://doi.org/10.1038/ismej.2017.6
-California Coast,Scalindrax,Anamnox bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/s41396-018-0223-9,https://doi.org/10.1038/s41396-018-0223-9
-Bay of Bengal,Lumini,Anoxygenic aerobic phototrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/s41597-024-02939-4,https://doi.org/10.1038/s41597-024-02939-4
-Bay of Bengal,Globula,Denitrifying sulfur-oxidizing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3389/fmicb.2022.1041521,https://doi.org/10.3389/fmicb.2022.1041521
-Bay of Bengal,Desulfas,Sulfate-reducing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1007/s12038-018-9781-2,https://doi.org/10.1007/s12038-018-9781-2
-Bay of Bengal,Methyli,Methanotrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/s41597-024-02939-4,https://doi.org/10.1038/s41597-024-02939-4
-Bay of Bengal,Tricho,Oxygenic phototrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1128/spectrum.00892-21,https://doi.org/10.1128/spectrum.00892-21
-Cariaco Basin,Chlororex,Kleptochloroplastidic ciliate,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1016/j.jmarsys.2016.03.015,https://doi.org/10.1016/j.jmarsys.2016.03.015
-Cariaco Basin,Glubby,Denitrifying sulfur-oxidizing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/s41467-023-36026-w,https://doi.org/10.1038/s41467-023-36026-w
-Cariaco Basin,Capsanox,Sulfate-reducing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/s41467-023-36026-w,https://doi.org/10.1038/s41467-023-36026-w
-Cariaco Basin,Vibri,Aerobic heterotrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1186/2046-9063-9-17,https://doi.org/10.1186/2046-9063-9-17
-Cariaco Basin,Ziny,Anamnox bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3354/ame01817,https://doi.org/10.3354/ame01817
+California Coast,Methanor,Methanogenic archaea,to add,10.1038/ismej.2017.6,https://doi.org/10.1038/ismej.2017.6
+California Coast,Scalindrax,Anamnox bacteria,to add,10.1038/s41396-018-0223-9,https://doi.org/10.1038/s41396-018-0223-9
+Bay of Bengal,Lumini,Anoxygenic aerobic phototrophic bacteria,to add,10.1038/s41597-024-02939-4,https://doi.org/10.1038/s41597-024-02939-4
+Bay of Bengal,Globula,Denitrifying sulfur-oxidizing bacteria,to add,10.3389/fmicb.2022.1041521,https://doi.org/10.3389/fmicb.2022.1041521
+Bay of Bengal,Desulfas,Sulfate-reducing bacteria,to add,10.1007/s12038-018-9781-2,https://doi.org/10.1007/s12038-018-9781-2
+Bay of Bengal,Methyli,Methanotrophic bacteria,to add,10.1038/s41597-024-02939-4,https://doi.org/10.1038/s41597-024-02939-4
+Bay of Bengal,Tricho,Oxygenic phototrophic bacteria,to add,10.1128/spectrum.00892-21,https://doi.org/10.1128/spectrum.00892-21
+Cariaco Basin,Chlororex,Kleptochloroplastidic ciliate,to add,10.1016/j.jmarsys.2016.03.015,https://doi.org/10.1016/j.jmarsys.2016.03.015
+Cariaco Basin,Glubby,Denitrifying sulfur-oxidizing bacteria,to add,10.1038/s41467-023-36026-w,https://doi.org/10.1038/s41467-023-36026-w
+Cariaco Basin,Capsanox,Sulfate-reducing bacteria,to add,10.1038/s41467-023-36026-w,https://doi.org/10.1038/s41467-023-36026-w
+Cariaco Basin,Vibri,Aerobic heterotrophic bacteria,to add,10.1186/2046-9063-9-17,https://doi.org/10.1186/2046-9063-9-17
+Cariaco Basin,Ziny,Anamnox bacteria,to add,10.3354/ame01817,https://doi.org/10.3354/ame01817
 Peruvian Coast,Crocos,Oxygenic phototrophic bacteria,Crocosphaera was detected in the oxic surface water of the Peruvian OMZ in January 2009.,10.1038/ismej.2014.71,https://doi.org/10.1038/ismej.2014.71
-Peruvian Coast,Noxie,Anammox bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1093/ismeco/ycae060,https://doi.org/10.1093/ismeco/ycae060
-Peruvian Coast,Desulfobul,Sulfate-reducing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1371/journal.pone.0068661,https://doi.org/10.1371/journal.pone.0068661
-Peruvian Coast,Rhodobi,Aerobic heterotrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1371/journal.pone.0068661,https://doi.org/10.1371/journal.pone.0068661
-Peruvian Coast,Magneti,Magnetotactic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1371/journal.pone.0068661,https://doi.org/10.1371/journal.pone.0068661
-Namibian Coast,PseudoN,Oxygenic phototrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1016/j.hal.2018.04.008,https://doi.org/10.1016/j.hal.2018.04.008
+Peruvian Coast,Noxie,Anammox bacteria,to add,10.1093/ismeco/ycae060,https://doi.org/10.1093/ismeco/ycae060
+Peruvian Coast,Desulfobul,Sulfate-reducing bacteria,to add,10.1371/journal.pone.0068661,https://doi.org/10.1371/journal.pone.0068661
+Peruvian Coast,Rhodobi,Aerobic heterotrophic bacteria,to add,10.1371/journal.pone.0068661,https://doi.org/10.1371/journal.pone.0068661
+Peruvian Coast,Magneti,Magnetotactic bacteria,to add,10.1371/journal.pone.0068661,https://doi.org/10.1371/journal.pone.0068661
+Namibian Coast,PseudoN,Oxygenic phototrophic bacteria,to add,10.1016/j.hal.2018.04.008,https://doi.org/10.1016/j.hal.2018.04.008
 Namibian Coast,Denitro,Denitrifying sulfur-oxidizing bacteria,Arcobacter nitrogilis was detected in March 2004 in the water column (80 m depth) of the Namibian OMZ.,10.1038/nature07588,https://doi.org/10.1038/nature07588
 Namibian Coast,Desulfobis,Sulfate-reducing bacteria,Desulfobulbus sp was detected in July 2018 in the sediment in the Namibian OMZ.,10.1128/aem.00216-22,https://doi.org/10.1128/aem.00216-22
 Namibian Coast,Sarox,Aerobic heterotrophic bacteria,Pelagibacter (SAR11 clade) was detected in July 2018 in the surface water of the Namibian OMZ.,10.1128/aem.00216-22,https://doi.org/10.1128/aem.00216-22
 Namibian Coast,Margarita,Denitrifying sulfur-oxidizing bacteria,Thiomargarita namibiensis was found from sediments at 100 m water depth in April 1997 along the Namibian Coast.,10.1126/science.284.5413.493,https://doi.org/10.1126/science.284.5413.493
-Saanich Inlet,Thalassa,Oxygenic phototrophic diazotrophic diatom,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1016/0146-6291(77)90499-4,https://doi.org/10.1016/0146-6291(77)90499-4
-Saanich Inlet,Spinanix,Nitrifying bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/s41396-020-00889-4,https://doi.org/10.1038/s41396-020-00889-4
+Saanich Inlet,Thalassa,Oxygenic phototrophic diazotrophic diatom,to add,10.1016/0146-6291(77)90499-4,https://doi.org/10.1016/0146-6291(77)90499-4
+Saanich Inlet,Spinanix,Nitrifying bacteria,to add,10.1038/s41396-020-00889-4,https://doi.org/10.1038/s41396-020-00889-4
 Saanich Inlet,Baculor,Sulfate-reducing bacteria,Desulfobacula I034_bin137 was detected at 200 m water depth of Saanich inlet in March 2010,10.1038/s41396-020-00889-4,https://doi.org/10.1038/s41396-020-00889-4
-Saanich Inlet,Sarix,Aerobic heterotrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3389/fmars.2019.00027,https://doi.org/10.3389/fmars.2019.00027
-Saanich Inlet,Ector,Anoxygenic anaerobic phototrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3389/fmars.2019.00027,https://doi.org/10.3389/fmars.2019.00027
-Arabian Sea,Ceros,Oxygenic phototrophic diatom,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1594/PANGAEA.736805,https://doi.org/10.1594/PANGAEA.736805
-Arabian Sea,Pumilus,Nitrifying bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3389/fmars.2024.1380819,https://doi.org/10.3389/fmars.2024.1380819
-Arabian Sea,Marino,Sulfate-reducing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1101/2020.07.31.229039,https://doi.org/10.1101/2020.07.31.229039
-Arabian Sea,Monas,Aerobic heterotrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3389/fmars.2024.1380819,https://doi.org/10.3389/fmars.2024.1380819
-Arabian Sea,Noctilux,Photosynthetic dinoflagellate,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1038/ncomms5862,https://doi.org/10.1038/ncomms5862
-Chilean Coast,Prochlorus,Oxygenic phototrophic bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1016/j.marenvres.2022.105710,https://doi.org/10.1016/j.marenvres.2022.105710
-Chilean Coast,Puff05,Denitrifying sulfur-oxidizing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.3389/fmicb.2019.03153,https://doi.org/10.3389/fmicb.2019.03153
-Chilean Coast,Venty,Denitrifying sulfur-oxidizing bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1371/journal.pone.0188371,https://doi.org/10.1371/journal.pone.0188371
-Chilean Coast,Methanil,Methanogenic archaea,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1264/jsme2.22.268,https://doi.org/10.1264/jsme2.22.268
-Chilean Coast,Spinanox,Nitrifying bacteria,Sulfurimonas phylotype (BS139) was detected in March 2005 at 192 m water depth in the mixing zone where the Bosporus Plume enters the Black Sea.,10.1111/1758-2229.12158,https://doi.org/10.1111/1758-2229.12158
+Saanich Inlet,Sarix,Aerobic heterotrophic bacteria,to add,10.3389/fmars.2019.00027,https://doi.org/10.3389/fmars.2019.00027
+Saanich Inlet,Ector,Anoxygenic anaerobic phototrophic bacteria,to add,10.3389/fmars.2019.00027,https://doi.org/10.3389/fmars.2019.00027
+Arabian Sea,Ceros,Oxygenic phototrophic diatom,to add,10.1594/PANGAEA.736805,https://doi.org/10.1594/PANGAEA.736805
+Arabian Sea,Pumilus,Nitrifying bacteria,to add,10.3389/fmars.2024.1380819,https://doi.org/10.3389/fmars.2024.1380819
+Arabian Sea,Marino,Sulfate-reducing bacteria,to add,10.1101/2020.07.31.229039,https://doi.org/10.1101/2020.07.31.229039
+Arabian Sea,Monas,Aerobic heterotrophic bacteria,to add,10.3389/fmars.2024.1380819,https://doi.org/10.3389/fmars.2024.1380819
+Arabian Sea,Noctilux,Photosynthetic dinoflagellate,to add,10.1038/ncomms5862,https://doi.org/10.1038/ncomms5862
+Chilean Coast,Prochlorus,Oxygenic phototrophic bacteria,to add,10.1016/j.marenvres.2022.105710,https://doi.org/10.1016/j.marenvres.2022.105710
+Chilean Coast,Puff05,Denitrifying sulfur-oxidizing bacteria,"Puff05 (SUP05 Thioglobus) was detected in the Chilean Coast oxygen-minimum zone between 70-200 m in January 2010.
+",10.1126/science.1196889,https://doi.org/10.1126/science.1196889
+Chilean Coast,Venty,Denitrifying sulfur-oxidizing bacteria,to add,10.1371/journal.pone.0188371,https://doi.org/10.1371/journal.pone.0188371
+Chilean Coast,Methanil,Methanogenic archaea,to add,10.1264/jsme2.22.268,https://doi.org/10.1264/jsme2.22.268
+Chilean Coast,Spinanox,Nitrifying bacteria,to add,10.1111/1758-2229.12158,https://doi.org/10.1111/1758-2229.12158
 The Origin,Cyanorion,An early oxygenic phototrophic bacteria,Cyanorion - the first oxygenic phototrophic bacteria - is suspected to have emerged about 2.08 billion years ago.,10.1098/rstb.2024.0097,https://doi.org/10.1098/rstb.2024.0097
 The Origin,Denitrion,An early denitrifier,Denitrion - the first denitrifying bacteria - is suspected to have emerged about 2.25 billion years ago.,10.1098/rstb.2024.0097,https://doi.org/10.1098/rstb.2024.0097
 The Origin,Metharion,An early methanogen,Metharion - the first methanogenic archaea - is suspected to have emerged around 3.77 billion years ago.,10.1098/rstb.2024.0097,https://doi.org/10.1098/rstb.2024.0097
