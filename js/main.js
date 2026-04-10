@@ -748,6 +748,10 @@ async function render() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // If we are on micromates.html, force the micromates page to load
+    if (window.forceMicromates === true) {
+        siteData.currentPage = 'micromates';
+    }
     render();
     document.addEventListener('click', (e) => { if (e.target === document.getElementById('modal')) closeModal(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
