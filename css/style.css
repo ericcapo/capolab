@@ -163,8 +163,6 @@ footer a:hover {
     width: auto;
     max-width: 150px;
     object-fit: contain;
-    filter: brightness(0) invert(1); /* Makes logo white if it's dark */
-    /* Remove filter line above if your logo is already light-colored */
 }
 
 .footer-info {
