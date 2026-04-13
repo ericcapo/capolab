@@ -8,13 +8,14 @@
     .publication-year {
         margin: 2rem 0 1rem 0;
         padding-bottom: 0.5rem;
-        border-bottom: 2px solid rgba(44, 125, 160, 0.3);
+        border-bottom: 2px solid rgba(106, 176, 214, 0.5);
     }
     
     .publication-year h3 {
         font-size: 1.8rem;
         color: white;
         margin: 0;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
     
     .publication-list {
@@ -24,44 +25,44 @@
     }
     
     .publication-item {
-        background-color: rgba(255, 255, 255, 0.75); /* More transparent - 75% opacity */
-        backdrop-filter: blur(2px);
-        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.6);      /* dark transparent */
+        backdrop-filter: blur(4px);
+        border-radius: 12px;
         padding: 1.5rem;
         transition: all 0.3s ease;
-        border-left: 4px solid #2c7da0;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #6ab0d6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     
     .publication-item:hover {
-        background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent on hover */
+        background-color: rgba(0, 0, 0, 0.75);
         transform: translateX(5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
     
     .publication-authors {
         font-size: 0.95rem;
-        color: black;
+        color: #f0f0f0;
         margin-bottom: 0.5rem;
         font-weight: 500;
     }
     
     .publication-authors b {
-        color: black;
+        color: #ffd966;
         font-weight: 700;
     }
     
     .publication-title {
         font-size: 1.1rem;
         font-weight: 600;
-        color: #1f3b4c;
+        color: white;
         margin-bottom: 0.75rem;
-        line-height: 1.2;
+        line-height: 1.3;
     }
     
     .publication-journal {
         font-size: 0.9rem;
-        color: #666;
+        color: #cccccc;
         font-style: italic;
         margin-bottom: 0.5rem;
     }
@@ -71,7 +72,7 @@
     }
     
     .publication-doi a {
-        color: #2c7da0;
+        color: #6ab0d6;
         text-decoration: none;
         font-family: monospace;
         font-size: 0.85rem;
@@ -79,7 +80,7 @@
     
     .publication-doi a:hover {
         text-decoration: underline;
-        color: #1f5e7a;
+        color: #8bcbff;
     }
     
     @media (max-width: 768px) {
