@@ -19,26 +19,24 @@
             background-attachment: fixed;
             background-position: center;
             min-height: 100vh;
-            padding: 12px;
+            padding: 20px;
             color: white;
         }
 
         .game-container {
-            max-width: 1300px;
+            max-width: 1600px;
             margin: 0 auto;
-            background: rgba(0, 20, 30, 0.75);
+            background: rgba(0, 20, 30, 0.7);
             backdrop-filter: blur(5px);
             border-radius: 1.5rem;
             padding: 1rem;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.5);
         }
 
         .game-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #3a9fc5;
         }
@@ -58,122 +56,88 @@
             font-size: 0.8rem;
         }
 
-        /* Rules box with new game button inside */
-        .rules-box {
-            background: rgba(0, 0, 0, 0.65);
-            border-radius: 1rem;
-            padding: 0.6rem 1rem;
-            margin-bottom: 1rem;
+        /* 4-column flex row */
+        .duel-row {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
             flex-wrap: wrap;
             gap: 1rem;
+            justify-content: center;
+        }
+        .column {
+            flex: 1;
+            min-width: 240px;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 1.2rem;
+            padding: 0.8rem;
+            backdrop-filter: blur(3px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* prevent any border bleed */
+        }
+
+        /* Rules column */
+        .rules-col {
+            gap: 0.8rem;
         }
         .rules-text {
-            flex: 4;
             font-size: 0.8rem;
-            line-height: 1.3;
+            line-height: 1.35;
+            background: rgba(0,0,0,0.5);
+            padding: 0.6rem;
+            border-radius: 1rem;
         }
-        .rules-img {
-            flex: 0;
+        .card-back-big {
             text-align: center;
+            margin: 0.5rem 0;
         }
-        .rules-img img {
-            max-width: 55px;
-            border-radius: 6px;
-            border: 1px solid #ffcf9a;
+        .card-back-big img {
+            width: 100%;
+            max-width: 140px;
+            border-radius: 8px;
+            border: 2px solid #ffcf9a;
+            box-shadow: 0 4px 12px black;
         }
         .new-game-btn {
             background: #ffb347;
             border: none;
             font-weight: bold;
-            padding: 0.3rem 1rem;
+            padding: 0.5rem;
             border-radius: 2rem;
             cursor: pointer;
-            font-size: 0.8rem;
-            white-space: nowrap;
+            font-size: 0.9rem;
+            width: 100%;
+            margin-top: 0.5rem;
         }
 
-        /* Score & status row */
-        .duel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            background: #021f2ccc;
-            border-radius: 2rem;
-            padding: 0.3rem 1rem;
-            margin-bottom: 1rem;
-        }
-        .score-card {
-            font-size: 1rem;
-            font-weight: bold;
-            background: #00000099;
-            padding: 0.2rem 0.8rem;
-            border-radius: 2rem;
-        }
-        .game-status {
-            background: #0a2e3b;
-            padding: 0.2rem 1rem;
-            border-radius: 2rem;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-
-        /* main row */
-        .battle-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .player-side, .opponent-side {
-            flex: 2;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 1rem;
-            padding: 0.6rem;
-        }
-        .center-arena {
-            flex: 1.6;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 1.5rem;
-            padding: 0.6rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
+        /* Hand columns */
         .hand-title {
             font-weight: bold;
-            margin-bottom: 0.3rem;
+            font-size: 1rem;
             text-align: center;
-            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             padding: 0 0.3rem;
         }
-        .hand-score {
-            font-size: 0.8rem;
+        .wins-counter {
             background: #000000aa;
-            padding: 0.1rem 0.5rem;
-            border-radius: 1rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
         }
-
-        /* cards: exact fit, no extra padding */
         .cards-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.5rem;
-            min-height: 160px;
+            gap: 0.7rem;
+            /* removed min-height to avoid empty space and bottom borders */
+            margin-top: 0.3rem;
+            margin-bottom: 0.3rem;
         }
-        .playable-card, .card-back, .battle-card {
-            width: 100px;
+        /* Real card size: 2.5 x 3.5 inches (150px width approx) */
+        .playable-card, .card-back {
+            width: 150px;
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
@@ -188,7 +152,7 @@
             transform: translateY(-4px);
             border-color: #f5b042;
         }
-        .playable-card img, .card-back img, .battle-card img {
+        .playable-card img, .card-back img {
             width: 100%;
             display: block;
             border-radius: 4px;
@@ -202,52 +166,86 @@
             padding: 0;
             overflow: hidden;
         }
+
+        /* VS column */
+        .vs-col {
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+        .battle-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
         .battle-card {
+            width: 140px;
             background: #02212ecc;
-            width: 110px;
+            border-radius: 6px;
             padding: 0;
             overflow: hidden;
+            text-align: center;
+        }
+        .battle-card img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 2.5 / 3.5;
+            object-fit: cover;
         }
         .battle-card div {
             font-size: 0.7rem;
-            margin-top: 2px;
+            margin-top: 4px;
         }
-
         .vs-text {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             background: #ffb34766;
-            padding: 0.1rem 0.6rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 50%;
+        }
+        .drag-hint {
+            font-size: 0.8rem;
+            background: #00000099;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            margin-top: 0.2rem;
         }
         .winner-msg {
             font-weight: bold;
-            margin: 0.2rem 0;
-            padding: 0.2rem;
+            margin: 0.5rem 0;
+            padding: 0.3rem;
             background: #000000aa;
             border-radius: 1rem;
             font-size: 0.75rem;
+            text-align: center;
         }
         .next-btn {
             background: #2c7da0;
             border: none;
             color: white;
-            padding: 0.3rem 1rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 2rem;
             cursor: pointer;
             font-weight: bold;
             font-size: 0.8rem;
+            margin-top: 0.5rem;
         }
         .next-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        @media (max-width: 1000px) {
-            .playable-card, .card-back, .battle-card { width: 85px; }
+        /* Responsive adjustments */
+        @media (max-width: 1100px) {
+            .playable-card, .card-back { width: 120px; }
+            .battle-card { width: 110px; }
         }
-        @media (max-width: 800px) {
-            .playable-card, .card-back, .battle-card { width: 75px; }
+        @media (max-width: 900px) {
+            .playable-card, .card-back { width: 100px; }
+            .battle-card { width: 95px; }
         }
     </style>
 </head>
@@ -258,42 +256,38 @@
         <div class="back-link"><a href="/">← Back</a></div>
     </div>
 
-    <!-- Rules box with New Game button -->
-    <div class="rules-box">
-        <div class="rules-text">
-            <strong>⚡ OCEANIC DUEL</strong> · Each player starts with 7 cards.<br>
-            Drag your card to the center → it fights a random opponent card.<br>
-            The <strong>energy color</strong> determines the winner (see image on card back).<br>
-            Winner gets 1 point. Both used cards are discarded.<br>
-            <strong>First to 4 points wins the duel!</strong> (3‑3 = no winner).<br>
-            Click "Next round" after each fight.
+    <!-- 4-column main layout -->
+    <div class="duel-row">
+        <!-- COLUMN 1: RULES + NEW GAME + CARD BACK -->
+        <div class="column rules-col">
+            <div class="rules-text">
+                <strong>⚡ OCEANIC DUEL</strong><br>
+                Start with 6 cards. Drag your card to the center to fight a random opponent card.<br>
+                The energy color (see card back) decides the winner.<br>
+                Winner gets 1 point; both cards are discarded.<br>
+                First to 4 points wins (3‑3 = no winner).<br>
+                Click “Next round” after each fight.
+            </div>
+            <div class="card-back-big">
+                <img src="images/mates/back.jpg" alt="card back (energy chart)">
+                <div style="font-size:0.7rem; margin-top:4px;">energy chart</div>
+            </div>
+            <button class="new-game-btn" id="resetGameBtn">⟳ NEW GAME</button>
         </div>
-        <div class="rules-img">
-            <img src="images/mates/back.jpg" alt="energy chart on back">
-        </div>
-        <button class="new-game-btn" id="resetGameBtn">⟳ NEW GAME</button>
-    </div>
 
-    <!-- Score & status -->
-    <div class="duel-header">
-        <div class="score-card">🏆 YOUR WINS: <span id="playerWins">0</span></div>
-        <div class="game-status" id="gameStatus">🌊 Drag a card to center</div>
-        <div class="score-card">🏆 OPPONENT WINS: <span id="opponentWins">0</span></div>
-    </div>
-
-    <div class="battle-row">
-        <!-- PLAYER SIDE -->
-        <div class="player-side">
+        <!-- COLUMN 2: YOUR HAND (with wins counter) -->
+        <div class="column">
             <div class="hand-title">
                 🐟 YOUR HAND
-                <span class="hand-score" id="playerHandCount">7 cards left</span>
+                <span class="wins-counter" id="playerWinsDisplay">0 wins</span>
             </div>
             <div class="cards-grid" id="playerHandContainer"></div>
+            <div style="font-size:0.7rem; text-align:center; margin-top:6px;" id="playerCardCount">6 cards left</div>
         </div>
 
-        <!-- CENTER ARENA -->
-        <div class="center-arena" id="dropZone">
-            <div class="battle-cards" style="display: flex; gap: 0.8rem; align-items: center;">
+        <!-- COLUMN 3: VS ARENA (drag hint inside) -->
+        <div class="column vs-col">
+            <div class="battle-cards">
                 <div class="battle-card" id="playerBattleCard">
                     <img src="images/mates/back.jpg" alt="your card">
                     <div>Your mate</div>
@@ -304,24 +298,26 @@
                     <div>Opponent's mate</div>
                 </div>
             </div>
+            <div class="drag-hint" id="dragHint">✨ drag a mate here ✨</div>
             <div id="winnerMessage" class="winner-msg"></div>
             <button id="nextRoundBtn" class="next-btn" disabled>➡ NEXT ROUND</button>
         </div>
 
-        <!-- OPPONENT SIDE -->
-        <div class="opponent-side">
+        <!-- COLUMN 4: OPPONENT HAND (with wins counter) -->
+        <div class="column">
             <div class="hand-title">
                 🌙 OPPONENT'S HAND
-                <span class="hand-score" id="opponentHandCount">7 cards left</span>
+                <span class="wins-counter" id="opponentWinsDisplay">0 wins</span>
             </div>
             <div class="cards-grid" id="opponentHandVisual"></div>
+            <div style="font-size:0.7rem; text-align:center; margin-top:6px;" id="opponentCardCount">6 cards left</div>
         </div>
     </div>
 </div>
 
 <script>
     // --------------------------------------------------------------
-    //  CARD DATA & DECK (55 cards, but we only need 7+7 = 14)
+    //  CARD DATA & DECK (55 cards, we only need 6+6 = 12)
     // --------------------------------------------------------------
     const REALMS = [
         "Abyss", "Coral", "Kelp", "SulfurVent", "Frozen",
@@ -382,18 +378,18 @@
     // DOM elements
     const playerHandDiv = document.getElementById("playerHandContainer");
     const opponentHandDiv = document.getElementById("opponentHandVisual");
-    const playerWinsSpan = document.getElementById("playerWins");
-    const opponentWinsSpan = document.getElementById("opponentWins");
-    const playerHandCountSpan = document.getElementById("playerHandCount");
-    const opponentHandCountSpan = document.getElementById("opponentHandCount");
-    const gameStatusSpan = document.getElementById("gameStatus");
+    const playerWinsSpan = document.getElementById("playerWinsDisplay");
+    const opponentWinsSpan = document.getElementById("opponentWinsDisplay");
+    const playerCardCountSpan = document.getElementById("playerCardCount");
+    const opponentCardCountSpan = document.getElementById("opponentCardCount");
     const winnerMsgDiv = document.getElementById("winnerMessage");
     const nextBtn = document.getElementById("nextRoundBtn");
+    const dragHint = document.getElementById("dragHint");
     const playerBattleImg = document.querySelector("#playerBattleCard img");
     const opponentBattleImg = document.querySelector("#opponentBattleCard img");
     const playerBattleLabel = document.querySelector("#playerBattleCard div");
     const opponentBattleLabel = document.querySelector("#opponentBattleCard div");
-    const dropZone = document.getElementById("dropZone");
+    const dropZone = document.querySelector(".vs-col");
 
     // Update UI: hands, scores, win condition
     function updateUI() {
@@ -404,7 +400,7 @@
             div.className = "playable-card";
             div.setAttribute("draggable", "true");
             div.setAttribute("data-index", idx);
-            div.innerHTML = `<img src="${getCardImage(card)}" onerror="this.src='https://placehold.co/100x140?text=card'">`;
+            div.innerHTML = `<img src="${getCardImage(card)}" onerror="this.src='https://placehold.co/150x210?text=card'">`;
             div.addEventListener("dragstart", (e) => {
                 if (!game.active || game.roundInProgress) {
                     e.preventDefault();
@@ -414,10 +410,12 @@
                 e.dataTransfer.setData("text/plain", idx);
                 e.dataTransfer.effectAllowed = "move";
                 div.style.opacity = "0.5";
+                dragHint.textContent = "✨ release to fight ✨";
             });
             div.addEventListener("dragend", (e) => {
                 div.style.opacity = "1";
                 game.draggedCardIndex = null;
+                dragHint.textContent = "✨ drag a mate here ✨";
             });
             playerHandDiv.appendChild(div);
         });
@@ -427,45 +425,41 @@
         for (let i = 0; i < game.opponentHand.length; i++) {
             const backDiv = document.createElement("div");
             backDiv.className = "card-back";
-            backDiv.innerHTML = `<img src="images/mates/back.jpg" onerror="this.src='https://placehold.co/100x140?text=??'">`;
+            backDiv.innerHTML = `<img src="images/mates/back.jpg" onerror="this.src='https://placehold.co/150x210?text=??'">`;
             opponentHandDiv.appendChild(backDiv);
         }
 
-        playerWinsSpan.innerText = game.playerScore;
-        opponentWinsSpan.innerText = game.opponentScore;
-        playerHandCountSpan.innerText = `${game.playerHand.length} card${game.playerHand.length !== 1 ? 's' : ''} left`;
-        opponentHandCountSpan.innerText = `${game.opponentHand.length} card${game.opponentHand.length !== 1 ? 's' : ''} left`;
+        playerWinsSpan.innerText = `${game.playerScore} win${game.playerScore !== 1 ? 's' : ''}`;
+        opponentWinsSpan.innerText = `${game.opponentScore} win${game.opponentScore !== 1 ? 's' : ''}`;
+        playerCardCountSpan.innerText = `${game.playerHand.length} card${game.playerHand.length !== 1 ? 's' : ''} left`;
+        opponentCardCountSpan.innerText = `${game.opponentHand.length} card${game.opponentHand.length !== 1 ? 's' : ''} left`;
 
-        // Win condition: first to 4 wins, or tie if both reach 3 and no cards left
+        // Win condition
         if (game.active) {
             if (game.playerScore >= 4) {
                 game.active = false;
                 game.roundInProgress = true;
-                gameStatusSpan.innerText = "🏆 YOU WIN THE DUEL! 🏆";
-                winnerMsgDiv.innerText = "🎉 VICTORY! You reached 4 wins!";
+                winnerMsgDiv.innerText = "🏆 VICTORY! You reached 4 wins!";
                 nextBtn.disabled = true;
+                dragHint.textContent = "🏆 GAME OVER";
             } else if (game.opponentScore >= 4) {
                 game.active = false;
                 game.roundInProgress = true;
-                gameStatusSpan.innerText = "💀 OPPONENT WINS THE DUEL";
                 winnerMsgDiv.innerText = "💀 Opponent reached 4 wins first.";
                 nextBtn.disabled = true;
+                dragHint.textContent = "💀 GAME OVER";
             } else if (game.playerHand.length === 0 && game.opponentHand.length === 0) {
-                // both out of cards – check final score
                 if (game.playerScore > game.opponentScore) {
-                    game.active = false;
-                    gameStatusSpan.innerText = "🏆 YOU WIN! (more wins)";
-                    winnerMsgDiv.innerText = "🏆 More wins when cards ran out!";
+                    winnerMsgDiv.innerText = "🏆 You win! (more wins)";
                 } else if (game.opponentScore > game.playerScore) {
-                    game.active = false;
-                    gameStatusSpan.innerText = "💀 OPPONENT WINS (more wins)";
-                    winnerMsgDiv.innerText = "💀 Opponent had more wins.";
+                    winnerMsgDiv.innerText = "💀 Opponent wins (more wins)";
                 } else {
-                    game.active = false;
-                    gameStatusSpan.innerText = "🤝 TIE – No winner";
-                    winnerMsgDiv.innerText = "3‑3 tie, no winner.";
+                    winnerMsgDiv.innerText = "🤝 3‑3 tie – no winner";
                 }
+                game.active = false;
+                game.roundInProgress = true;
                 nextBtn.disabled = true;
+                dragHint.textContent = "⚡ GAME OVER";
             }
         }
     }
@@ -494,14 +488,11 @@
         if (result === "player") {
             game.playerScore++;
             message = `✅ YOU WIN! +1 point (${game.playerScore}‑${game.opponentScore})`;
-            gameStatusSpan.innerText = "✅ You won this battle!";
         } else if (result === "opponent") {
             game.opponentScore++;
             message = `💀 OPPONENT WINS! (${game.playerScore}‑${game.opponentScore})`;
-            gameStatusSpan.innerText = "❌ Opponent won this battle!";
         } else {
             message = `⚖️ TIE! No points. (${game.playerScore}‑${game.opponentScore})`;
-            gameStatusSpan.innerText = "⚡ Tie! No points awarded.";
         }
         winnerMsgDiv.innerText = message;
 
@@ -512,10 +503,8 @@
             return;
         }
 
-        // Enable next round button
         game.roundInProgress = true;
         nextBtn.disabled = false;
-        nextBtn.style.cursor = "pointer";
     }
 
     // Drop handler
@@ -528,21 +517,21 @@
             performBattle(playerIdx);
         }
         game.draggedCardIndex = null;
+        dragHint.textContent = "✨ drag a mate here ✨";
     }
 
     function allowDrop(e) {
         e.preventDefault();
     }
 
-    // Next round: clear arena, enable new fights
+    // Next round
     function nextRound() {
         if (!game.active) return;
         if (!game.roundInProgress) return;
         game.roundInProgress = false;
         winnerMsgDiv.innerHTML = "";
-        gameStatusSpan.innerText = "🌊 Drag a card to center";
+        dragHint.textContent = "✨ drag a mate here ✨";
         nextBtn.disabled = true;
-        // reset battle images
         playerBattleImg.src = "images/mates/back.jpg";
         playerBattleLabel.textContent = "Your mate";
         opponentBattleImg.src = "images/mates/back.jpg";
@@ -550,12 +539,12 @@
         updateUI();
     }
 
-    // Reset game: each gets 7 random cards, scores 0‑0
+    // Reset game
     function initNewGame() {
-        const fullDeck = buildFullDeck(); // 55 shuffled
+        const fullDeck = buildFullDeck();
         game.playerHand = [];
         game.opponentHand = [];
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) {
             if (fullDeck.length) game.playerHand.push(fullDeck.pop());
             if (fullDeck.length) game.opponentHand.push(fullDeck.pop());
         }
@@ -570,7 +559,7 @@
         opponentBattleImg.src = "images/mates/back.jpg";
         opponentBattleLabel.textContent = "Opponent's mate";
         winnerMsgDiv.innerHTML = "";
-        gameStatusSpan.innerText = "🌊 Drag a card to center";
+        dragHint.textContent = "✨ drag a mate here ✨";
         nextBtn.disabled = true;
 
         updateUI();
