@@ -19,19 +19,21 @@
             background-attachment: fixed;
             background-position: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
             color: white;
         }
 
-        /* ----- navigation bar (matching main.js style) ----- */
+        /* ----- EXACT NAVIGATION BAR (matching main site) ----- */
         nav {
             position: relative;
             background-image: url('../images/back.jpg');
             background-size: cover;
             background-position: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            border-radius: 1rem;
-            margin-bottom: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         nav::before {
             content: '';
@@ -41,36 +43,36 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 1rem;
             z-index: 0;
         }
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
             z-index: 1;
+            background-color: transparent;
         }
         .logo {
             color: white;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             text-decoration: none;
-            text-shadow: 2px 2px 4px black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 2rem;
         }
         .nav-links a {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 1.2rem;
             transition: color 0.3s ease;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
@@ -78,12 +80,20 @@
             color: #6ab0d6;
         }
 
-        /* 4-column flex row – no outer container background */
+        /* main container */
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* 4-column flex row – columns keep same height */
         .duel-row {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             justify-content: center;
+            align-items: stretch;
         }
         .column {
             flex: 1;
@@ -95,6 +105,8 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            /* fixed minimum height to keep size consistent even with fewer cards */
+            min-height: 480px;
         }
 
         /* Rules column */
@@ -108,15 +120,15 @@
             background: rgba(0,0,0,0.3);
             padding: 0.6rem;
             border-radius: 1rem;
-            margin-top: 0.3rem;
         }
         .card-back-big {
             text-align: center;
             margin: 0.5rem 0;
         }
+        /* twice bigger card back image */
         .card-back-big img {
             width: 100%;
-            max-width: 130px;
+            max-width: 200px;
             border-radius: 8px;
             border: 2px solid #ffcf9a;
             box-shadow: 0 4px 12px black;
@@ -161,10 +173,11 @@
             justify-content: center;
             gap: 0.6rem;
             margin: 0.3rem 0;
+            flex-grow: 1;
+            align-content: flex-start;
         }
-        /* Smaller cards: 120px width (down from 150) */
         .playable-card, .card-back {
-            width: 120px;
+            width: 110px;
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
@@ -196,9 +209,25 @@
 
         /* VS column */
         .vs-col {
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             gap: 0.8rem;
+        }
+        .next-btn {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+            width: auto;
+            margin-bottom: 0.5rem;
+        }
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         .battle-cards {
             display: flex;
@@ -222,6 +251,7 @@
             aspect-ratio: 2.5 / 3.5;
             object-fit: cover;
         }
+        /* remove energy text from battle cards */
         .battle-card div {
             font-size: 0.7rem;
             margin-top: 4px;
@@ -249,34 +279,21 @@
             font-size: 0.75rem;
             text-align: center;
         }
-        .next-btn {
-            background: #2c7da0;
-            border: none;
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-        }
-        .next-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
 
         @media (max-width: 1000px) {
-            .playable-card, .card-back { width: 100px; }
+            .playable-card, .card-back { width: 95px; }
             .battle-card { width: 95px; }
+            .card-back-big img { max-width: 160px; }
         }
         @media (max-width: 800px) {
             .playable-card, .card-back { width: 85px; }
-            .battle-card { width: 80px; }
+            .battle-card { width: 85px; }
+            .column { min-height: 420px; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation bar (same as main site) -->
+    <!-- EXACT NAVIGATION BAR (matching main site) -->
     <nav>
         <div class="nav-container">
             <a href="/" class="logo">Capo Lab</a>
@@ -291,59 +308,61 @@
         </div>
     </nav>
 
-    <!-- 4-column main layout (no outer background) -->
-    <div class="duel-row">
-        <!-- COLUMN 1: RULES + NEW GAME (button at top) -->
-        <div class="column rules-col">
-            <button class="new-game-btn" id="resetGameBtn">⟳ NEW GAME</button>
-            <div class="rules-text">
-                <strong>⚡ OCEANIC DUEL</strong><br>
-                Drag a mate to the box "Duel" to fight an opponent card.<br>
-                The energy color decides the winner (see below for energy chart).<br>
-                The player with more wins is the winner.
-            </div>
-            <div class="card-back-big">
-                <img src="images/mates/back.jpg" alt="card back (energy chart)">
-                <div class="energy-label">⚡ ENERGY CHART ⚡</div>
-            </div>
-        </div>
-
-        <!-- COLUMN 2: YOUR HAND (with wins counter) -->
-        <div class="column">
-            <div class="hand-title">
-                🐟 YOUR HAND
-                <span class="wins-counter" id="playerWinsDisplay">0 wins</span>
-            </div>
-            <div class="cards-grid" id="playerHandContainer"></div>
-            <div style="font-size:0.7rem; text-align:center; margin-top:6px;" id="playerCardCount">6 cards left</div>
-        </div>
-
-        <!-- COLUMN 3: VS ARENA (drag hint inside) -->
-        <div class="column vs-col">
-            <div class="battle-cards">
-                <div class="battle-card" id="playerBattleCard">
-                    <img src="images/mates/back.jpg" alt="your card">
-                    <div>Your mate</div>
+    <div class="main-content">
+        <!-- 4-column main layout -->
+        <div class="duel-row">
+            <!-- COLUMN 1: RULES + NEW GAME -->
+            <div class="column rules-col">
+                <button class="new-game-btn" id="resetGameBtn">⟳ NEW GAME</button>
+                <div class="rules-text">
+                    <strong>⚡ OCEANIC DUEL</strong><br>
+                    Drag a mate to the box "Duel" to fight an opponent card.<br>
+                    The energy color decides the winner (see below for energy chart).<br>
+                    The player with more wins is the winner.
                 </div>
-                <div class="vs-text">VS</div>
-                <div class="battle-card" id="opponentBattleCard">
-                    <img src="images/mates/back.jpg" alt="opponent card">
-                    <div>Opponent's mate</div>
+                <div class="card-back-big">
+                    <img src="images/mates/back.jpg" alt="card back (energy chart)">
+                    <div class="energy-label">⚡ ENERGY CHART ⚡</div>
                 </div>
             </div>
-            <div class="drag-hint" id="dragHint">✨ drag a mate here ✨</div>
-            <div id="winnerMessage" class="winner-msg"></div>
-            <button id="nextRoundBtn" class="next-btn" disabled>➡ NEXT ROUND</button>
-        </div>
 
-        <!-- COLUMN 4: OPPONENT HAND (with wins counter) -->
-        <div class="column">
-            <div class="hand-title">
-                🌙 OPPONENT'S HAND
-                <span class="wins-counter" id="opponentWinsDisplay">0 wins</span>
+            <!-- COLUMN 2: YOUR HAND -->
+            <div class="column">
+                <div class="hand-title">
+                    🐟 YOUR HAND
+                    <span class="wins-counter" id="playerWinsDisplay">0 wins</span>
+                </div>
+                <div class="cards-grid" id="playerHandContainer"></div>
+                <div style="font-size:0.7rem; text-align:center; margin-top:6px;" id="playerCardCount">6 cards left</div>
             </div>
-            <div class="cards-grid" id="opponentHandVisual"></div>
-            <div style="font-size:0.7rem; text-align:center; margin-top:6px;" id="opponentCardCount">6 cards left</div>
+
+            <!-- COLUMN 3: VS ARENA (Next Round button moved above) -->
+            <div class="column vs-col">
+                <button id="nextRoundBtn" class="next-btn" disabled>➡ NEXT ROUND</button>
+                <div class="battle-cards">
+                    <div class="battle-card" id="playerBattleCard">
+                        <img src="images/mates/back.jpg" alt="your card">
+                        <div></div> <!-- empty label, no energy text -->
+                    </div>
+                    <div class="vs-text">VS</div>
+                    <div class="battle-card" id="opponentBattleCard">
+                        <img src="images/mates/back.jpg" alt="opponent card">
+                        <div></div>
+                    </div>
+                </div>
+                <div class="drag-hint" id="dragHint">✨ drag a mate here ✨</div>
+                <div id="winnerMessage" class="winner-msg"></div>
+            </div>
+
+            <!-- COLUMN 4: OPPONENT HAND -->
+            <div class="column">
+                <div class="hand-title">
+                    🌙 OPPONENT'S HAND
+                    <span class="wins-counter" id="opponentWinsDisplay">0 wins</span>
+                </div>
+                <div class="cards-grid" id="opponentHandVisual"></div>
+                <div style="font-size:0.7rem; text-align:center; margin-top:6px;" id="opponentCardCount">6 cards left</div>
+            </div>
         </div>
     </div>
 
@@ -379,7 +398,7 @@
             return `images/mates/mates${padded}.jpg`;
         }
 
-        // Energy rules (same as before)
+        // Energy rules (no text display anywhere)
         function getWinner(energyA, energyB) {
             if (energyA === energyB) return "tie";
             const winMap = {
@@ -419,11 +438,9 @@
         const dragHint = document.getElementById("dragHint");
         const playerBattleImg = document.querySelector("#playerBattleCard img");
         const opponentBattleImg = document.querySelector("#opponentBattleCard img");
-        const playerBattleLabel = document.querySelector("#playerBattleCard div");
-        const opponentBattleLabel = document.querySelector("#opponentBattleCard div");
         const dropZone = document.querySelector(".vs-col");
 
-        // Update UI: hands, scores, win condition
+        // Update UI
         function updateUI() {
             // Player hand (draggable cards)
             playerHandDiv.innerHTML = "";
@@ -432,7 +449,7 @@
                 div.className = "playable-card";
                 div.setAttribute("draggable", "true");
                 div.setAttribute("data-index", idx);
-                div.innerHTML = `<img src="${getCardImage(card)}" onerror="this.src='https://placehold.co/120x168?text=card'">`;
+                div.innerHTML = `<img src="${getCardImage(card)}" onerror="this.src='https://placehold.co/110x154?text=card'">`;
                 div.addEventListener("dragstart", (e) => {
                     if (!game.active || game.roundInProgress) {
                         e.preventDefault();
@@ -457,7 +474,7 @@
             for (let i = 0; i < game.opponentHand.length; i++) {
                 const backDiv = document.createElement("div");
                 backDiv.className = "card-back";
-                backDiv.innerHTML = `<img src="images/mates/back.jpg" onerror="this.src='https://placehold.co/120x168?text=??'">`;
+                backDiv.innerHTML = `<img src="images/mates/back.jpg" onerror="this.src='https://placehold.co/110x154?text=??'">`;
                 opponentHandDiv.appendChild(backDiv);
             }
 
@@ -466,7 +483,7 @@
             playerCardCountSpan.innerText = `${game.playerHand.length} card${game.playerHand.length !== 1 ? 's' : ''} left`;
             opponentCardCountSpan.innerText = `${game.opponentHand.length} card${game.opponentHand.length !== 1 ? 's' : ''} left`;
 
-            // Win condition: best of 7 (first to 4 wins) or tie after all cards
+            // Win condition
             if (game.active) {
                 if (game.playerScore >= 4) {
                     game.active = false;
@@ -496,7 +513,7 @@
             }
         }
 
-        // Perform battle after drop
+        // Perform battle
         async function performBattle(playerIdx) {
             if (!game.active || game.roundInProgress) return;
             if (game.playerHand.length === 0 || game.opponentHand.length === 0) return;
@@ -505,11 +522,9 @@
             const oppIdx = Math.floor(Math.random() * game.opponentHand.length);
             const opponentCard = game.opponentHand[oppIdx];
 
-            // Show cards in arena
+            // Show cards in arena (no text labels)
             playerBattleImg.src = getCardImage(playerCard);
-            playerBattleLabel.textContent = `${playerCard.energy}`;
             opponentBattleImg.src = getCardImage(opponentCard);
-            opponentBattleLabel.textContent = `${opponentCard.energy}`;
 
             // Remove both cards from hands
             game.playerHand.splice(playerIdx, 1);
@@ -565,9 +580,7 @@
             dragHint.textContent = "✨ drag a mate here ✨";
             nextBtn.disabled = true;
             playerBattleImg.src = "images/mates/back.jpg";
-            playerBattleLabel.textContent = "Your mate";
             opponentBattleImg.src = "images/mates/back.jpg";
-            opponentBattleLabel.textContent = "Opponent's mate";
             updateUI();
         }
 
@@ -587,9 +600,7 @@
             game.draggedCardIndex = null;
 
             playerBattleImg.src = "images/mates/back.jpg";
-            playerBattleLabel.textContent = "Your mate";
             opponentBattleImg.src = "images/mates/back.jpg";
-            opponentBattleLabel.textContent = "Opponent's mate";
             winnerMsgDiv.innerHTML = "";
             dragHint.textContent = "✨ drag a mate here ✨";
             nextBtn.disabled = true;
