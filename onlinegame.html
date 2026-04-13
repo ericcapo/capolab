@@ -23,7 +23,6 @@
             color: white;
         }
 
-        /* main container with transparency */
         .game-container {
             max-width: 1500px;
             margin: 0 auto;
@@ -34,7 +33,6 @@
             box-shadow: 0 20px 35px rgba(0,0,0,0.5);
         }
 
-        /* header */
         .game-header {
             display: flex;
             justify-content: space-between;
@@ -59,7 +57,6 @@
             text-decoration: none;
         }
 
-        /* rules panel with image */
         .rules-panel {
             background: rgba(0, 0, 0, 0.65);
             border-radius: 1.5rem;
@@ -82,12 +79,11 @@
         }
         .rules-img img {
             max-width: 100px;
-            border-radius: 12px;
+            border-radius: 6px;
             border: 2px solid #ffcf9a;
             box-shadow: 0 4px 12px black;
         }
 
-        /* score bar */
         .duel-header {
             display: flex;
             justify-content: space-between;
@@ -122,7 +118,6 @@
             transition: 0.2s;
         }
 
-        /* main battle row: left (player), center (VS), right (opponent) */
         .battle-row {
             display: flex;
             flex-wrap: wrap;
@@ -154,7 +149,6 @@
             padding: 1rem;
         }
 
-        /* hand cards */
         .hand-title {
             font-weight: bold;
             margin-bottom: 0.5rem;
@@ -165,12 +159,13 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.8rem;
-            min-height: 160px;
+            min-height: 240px;
         }
+        /* Card size: 2.5 x 3.5 ratio (width 150px, height 210px) */
         .playable-card {
-            width: 90px;
+            width: 150px;
             background: #fff2df;
-            border-radius: 1rem;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.1s;
             border: 2px solid #ffcf9a;
@@ -184,65 +179,27 @@
         }
         .playable-card img {
             width: 100%;
-            border-radius: 8px;
+            border-radius: 4px;
+            aspect-ratio: 2.5 / 3.5;
+            object-fit: cover;
         }
-        .card-energy {
-            font-size: 0.7rem;
-            font-weight: bold;
-            background: #1f5e6e;
-            display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 1rem;
-            color: white;
-            margin-top: 4px;
-        }
+        /* No energy label below player cards */
+
         .card-back {
-            width: 90px;
+            width: 150px;
             background: #1c5f6e;
-            border-radius: 1rem;
+            border-radius: 6px;
             padding: 0.3rem;
             text-align: center;
             box-shadow: 0 4px 8px black;
         }
         .card-back img {
             width: 100%;
-            border-radius: 8px;
-        }
-
-        /* pot slots */
-        .pot-area {
-            margin-top: 1rem;
-        }
-        .pot-title {
-            font-size: 0.8rem;
-            text-align: center;
-            margin-bottom: 0.3rem;
-        }
-        .pot-slots {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-        }
-        .pot-slot {
-            width: 45px;
-            height: 60px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 8px;
-            border: 1px solid #ffcf9a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            overflow: hidden;
-        }
-        .pot-slot img {
-            width: 100%;
-            height: 100%;
+            border-radius: 4px;
+            aspect-ratio: 2.5 / 3.5;
             object-fit: cover;
         }
 
-        /* battle cards in center */
         .battle-cards {
             display: flex;
             justify-content: center;
@@ -251,15 +208,17 @@
             flex-wrap: wrap;
         }
         .battle-card {
-            width: 110px;
+            width: 140px;
             text-align: center;
             background: #02212ecc;
-            border-radius: 1rem;
+            border-radius: 6px;
             padding: 0.5rem;
         }
         .battle-card img {
             width: 100%;
-            border-radius: 10px;
+            border-radius: 6px;
+            aspect-ratio: 2.5 / 3.5;
+            object-fit: cover;
         }
         .vs-text {
             font-size: 2rem;
@@ -291,9 +250,11 @@
         }
 
         @media (max-width: 1000px) {
-            .playable-card, .card-back { width: 70px; }
-            .battle-card { width: 90px; }
-            .pot-slot { width: 35px; height: 50px; }
+            .playable-card, .card-back { width: 110px; }
+            .battle-card { width: 100px; }
+        }
+        @media (max-width: 700px) {
+            .playable-card, .card-back { width: 85px; }
         }
     </style>
 </head>
@@ -308,25 +269,24 @@
     <div class="rules-panel">
         <div class="rules-text">
             <strong>⚡ OCEANIC MATE DUEL – RULES</strong><br>
-            • You and opponent start with <strong>6 random cards</strong> (face up).<br>
+            • You and opponent start with <strong>6 random cards</strong>.<br>
             • Click a card → it fights a random opponent card in the center.<br>
-            • <strong>Win</strong>: you steal 1 random card from opponent's hand → add to your <strong>collection pot</strong>.<br>
-            • <strong>Lose</strong>: opponent steals 1 random card from your hand → adds to their pot.<br>
+            • <strong>Win</strong>: you steal 1 random card from opponent's hand → added to your hand.<br>
+            • <strong>Lose</strong>: opponent steals 1 random card from your hand → added to their hand.<br>
             • <strong>Tie</strong>: both cards discarded, each draws 1 from deck (no steal).<br>
             • After each fight, click <strong>“Next round”</strong> to continue.<br>
-            • <strong>First to collect 10 cards in your pot wins the duel!</strong>
+            • <strong>First to hold 10 cards in hand wins the duel!</strong>
         </div>
         <div class="rules-img">
-            <img src="images/mates/back.jpg" alt="card back" onerror="this.src='https://placehold.co/100x140?text=Back'">
-            <div style="font-size:0.7rem;">card back</div>
+            <img src="images/mates/back.jpg" alt="card back">
         </div>
     </div>
 
     <!-- Score & new game -->
     <div class="duel-header">
-        <div class="score-card">🏆 YOUR POT: <span id="playerPotCount">0</span> / 10</div>
+        <div class="score-card">🐚 YOUR HAND: <span id="playerHandCount">6</span> cards</div>
         <div class="game-status" id="gameStatus">🌊 Choose a card</div>
-        <div class="score-card">🏆 OPPONENT POT: <span id="opponentPotCount">0</span> / 10</div>
+        <div class="score-card">🌙 OPPONENT HAND: <span id="opponentHandCount">6</span> cards</div>
         <button class="new-game-btn" id="resetGameBtn">⟳ NEW GAME</button>
     </div>
 
@@ -336,10 +296,6 @@
         <div class="player-side">
             <div class="hand-title">🐟 YOUR HAND (click a card)</div>
             <div class="cards-grid" id="playerHandContainer"></div>
-            <div class="pot-area">
-                <div class="pot-title">📦 YOUR COLLECTION (won cards)</div>
-                <div class="pot-slots" id="playerPotSlots"></div>
-            </div>
         </div>
 
         <!-- CENTER ARENA -->
@@ -361,12 +317,8 @@
 
         <!-- OPPONENT SIDE (right) -->
         <div class="opponent-side">
-            <div class="hand-title">🌙 OPPONENT'S HAND (face down)</div>
+            <div class="hand-title">🌙 OPPONENT'S HAND</div>
             <div class="cards-grid" id="opponentHandVisual"></div>
-            <div class="pot-area">
-                <div class="pot-title">📦 OPPONENT'S COLLECTION</div>
-                <div class="pot-slots" id="opponentPotSlots"></div>
-            </div>
         </div>
     </div>
 </div>
@@ -422,25 +374,19 @@
     //  GAME STATE
     // --------------------------------------------------------------
     let game = {
-        playerHand: [],      // cards in hand (playable)
+        playerHand: [],
         opponentHand: [],
-        playerPot: [],       // collected cards (max 10)
-        opponentPot: [],
         drawDeck: [],
         discardPile: [],
         active: true,
-        roundInProgress: false,   // waiting for next round?
-        pendingBattle: null,
-        winnerText: ""
+        roundInProgress: false,   // waiting for next round
     };
 
     // DOM elements
     const playerHandDiv = document.getElementById("playerHandContainer");
     const opponentHandDiv = document.getElementById("opponentHandVisual");
-    const playerPotSlots = document.getElementById("playerPotSlots");
-    const opponentPotSlots = document.getElementById("opponentPotSlots");
-    const playerPotCountSpan = document.getElementById("playerPotCount");
-    const opponentPotCountSpan = document.getElementById("opponentPotCount");
+    const playerHandCountSpan = document.getElementById("playerHandCount");
+    const opponentHandCountSpan = document.getElementById("opponentHandCount");
     const gameStatusSpan = document.getElementById("gameStatus");
     const winnerMsgDiv = document.getElementById("winnerMessage");
     const nextBtn = document.getElementById("nextRoundBtn");
@@ -459,7 +405,7 @@
         return game.drawDeck.pop();
     }
 
-    // Refill hands to 6 cards each (from draw deck)
+    // Refill hands to 6 cards each (from draw deck, only if below 6)
     function refillHands() {
         while (game.playerHand.length < 6 && game.drawDeck.length > 0) {
             const card = drawCard();
@@ -473,15 +419,14 @@
         }
     }
 
-    // Update all UI: hands, pots, buttons, win condition
+    // Update all UI: hands, win condition
     function updateUI() {
         // Player hand (faces)
         playerHandDiv.innerHTML = "";
         game.playerHand.forEach((card, idx) => {
             const div = document.createElement("div");
             div.className = "playable-card";
-            div.innerHTML = `<img src="${getCardImage(card)}" onerror="this.src='https://placehold.co/90x120?text=${card.energy}'">
-                             <div class="card-energy">⚡ ${card.energy}</div>`;
+            div.innerHTML = `<img src="${getCardImage(card)}" onerror="this.src='https://placehold.co/150x210?text=${card.energy}'">`;
             if (game.active && !game.roundInProgress) {
                 div.style.cursor = "pointer";
                 div.onclick = () => selectCardForBattle(idx);
@@ -492,62 +437,42 @@
             playerHandDiv.appendChild(div);
         });
 
-        // Opponent hand (backs)
+        // Opponent hand (only backs, no text)
         opponentHandDiv.innerHTML = "";
         for (let i = 0; i < game.opponentHand.length; i++) {
             const backDiv = document.createElement("div");
             backDiv.className = "card-back";
-            backDiv.innerHTML = `<img src="images/mates/back.jpg" onerror="this.src='https://placehold.co/90x120?text=??'"><div style="font-size:0.7rem;">???</div>`;
+            backDiv.innerHTML = `<img src="images/mates/back.jpg" onerror="this.src='https://placehold.co/150x210?text=??'">`;
             opponentHandDiv.appendChild(backDiv);
         }
 
-        // Pots display (slots up to 10)
-        function renderPot(container, potArray) {
-            container.innerHTML = "";
-            for (let i = 0; i < 10; i++) {
-                const slot = document.createElement("div");
-                slot.className = "pot-slot";
-                if (i < potArray.length) {
-                    const card = potArray[i];
-                    const img = document.createElement("img");
-                    img.src = getCardImage(card);
-                    img.onerror = () => { img.src = "https://placehold.co/45x60?text=card"; };
-                    slot.appendChild(img);
-                } else {
-                    slot.textContent = "⬚";
-                }
-                container.appendChild(slot);
-            }
-        }
-        renderPot(playerPotSlots, game.playerPot);
-        renderPot(opponentPotSlots, game.opponentPot);
-        playerPotCountSpan.innerText = game.playerPot.length;
-        opponentPotCountSpan.innerText = game.opponentPot.length;
+        playerHandCountSpan.innerText = game.playerHand.length;
+        opponentHandCountSpan.innerText = game.opponentHand.length;
 
-        // Win check: first to 10 pot cards
+        // Win check: first to 10 cards in hand
         if (game.active) {
-            if (game.playerPot.length >= 10) {
+            if (game.playerHand.length >= 10) {
                 game.active = false;
                 game.roundInProgress = true;
-                gameStatusSpan.innerText = "🏆 YOU WIN! Collected 10 cards! 🏆";
+                gameStatusSpan.innerText = "🏆 YOU WIN! 10 cards! 🏆";
                 winnerMsgDiv.innerText = "🏆 VICTORY! You reached 10 cards!";
                 nextBtn.disabled = true;
-            } else if (game.opponentPot.length >= 10) {
+            } else if (game.opponentHand.length >= 10) {
                 game.active = false;
                 game.roundInProgress = true;
                 gameStatusSpan.innerText = "💀 OPPONENT WINS (10 cards)";
-                winnerMsgDiv.innerText = "💀 Opponent collected 10 cards first.";
+                winnerMsgDiv.innerText = "💀 Opponent reached 10 cards first.";
                 nextBtn.disabled = true;
             }
         }
     }
 
-    // Steal a random card from loser's hand and add to winner's pot
-    function stealAndAddToPot(winnerPot, loserHand) {
+    // Steal a random card from loser's hand and add to winner's hand
+    function stealCard(winnerHand, loserHand) {
         if (loserHand.length === 0) return false;
         const idx = Math.floor(Math.random() * loserHand.length);
         const stolen = loserHand.splice(idx, 1)[0];
-        winnerPot.push(stolen);
+        winnerHand.push(stolen);
         return true;
     }
 
@@ -564,14 +489,12 @@
     async function finishRound(winner, playerCard, opponentCard) {
         let message = "";
         if (winner === "player") {
-            message = "✅ YOU WIN! Steal 1 card from opponent → added to your collection.";
-            const stolen = stealAndAddToPot(game.playerPot, game.opponentHand);
-            if (!stolen) message += " (opponent had no card to steal)";
+            const stolen = stealCard(game.playerHand, game.opponentHand);
+            message = stolen ? "✅ YOU WIN! Stole 1 card from opponent → added to your hand." : "✅ YOU WIN! (opponent had no card to steal)";
             gameStatusSpan.innerText = "✅ You won the duel!";
         } else if (winner === "opponent") {
-            message = "💀 OPPONENT WINS! Steals 1 card from you → added to opponent's collection.";
-            const stolen = stealAndAddToPot(game.opponentPot, game.playerHand);
-            if (!stolen) message += " (you had no card to steal)";
+            const stolen = stealCard(game.opponentHand, game.playerHand);
+            message = stolen ? "💀 OPPONENT WINS! Stole 1 card from you → added to opponent's hand." : "💀 OPPONENT WINS! (you had no card to steal)";
             gameStatusSpan.innerText = "❌ Opponent wins the duel!";
         } else { // tie
             message = "⚖️ TIE! Both cards discarded. Each draws 1 card from deck.";
@@ -580,7 +503,7 @@
         }
         winnerMsgDiv.innerText = message;
         
-        // Refill hands to 6 cards each
+        // Refill hands to 6 cards each (if possible)
         refillHands();
         
         updateUI();
@@ -635,8 +558,6 @@
         const fullDeck = buildFullDeck(); // 55 shuffled
         game.playerHand = [];
         game.opponentHand = [];
-        game.playerPot = [];
-        game.opponentPot = [];
         game.discardPile = [];
         // deal 6 cards each
         for (let i = 0; i < 6; i++) {
