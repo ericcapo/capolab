@@ -665,7 +665,10 @@ function renderHome() {
     
     return `
         <div class="hero">
-            <h1>Welcome to Capo Lab</h1>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 80px; width: auto;">
+        <h1 style="margin: 0;">Welcome to Capo Lab</h1>
+    </div>
             <p><b>We explore the past life of microorganisms in marine and freshwater ecosystems</b></p>
         </div>
         <div class="lab-intro">
@@ -700,7 +703,8 @@ async function render() {
     const navigation = `
         <nav>
             <div class="nav-container">
-                <a href="#" onclick="navigateTo('home'); return false;" class="logo">Capo Lab</a>
+                <<a href="#" onclick="navigateTo('home'); return false;" class="logo">
+    <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 30px; vertical-align: middle; margin-right: 8px;">Capo Lab</a>
                 <ul class="nav-links">
                     <li><a href="#" data-page="home" onclick="navigateTo('home'); return false;">Home</a></li>
                     <li><a href="#" data-page="research" onclick="navigateTo('research'); return false;">Research</a></li>
