@@ -666,7 +666,7 @@ function renderHome() {
     return `
         <div class="hero">
     <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 200px; width: auto;">
+        <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 150px; width: auto;">
         <h1 style="margin: 0;">Welcome to Capo Lab</h1>
     </div>
             <p><b>We explore the past life of microorganisms in marine and freshwater ecosystems</b></p>
