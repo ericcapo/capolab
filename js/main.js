@@ -666,7 +666,7 @@ function renderHome() {
     return `
         <div class="hero">
     <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 80px; width: auto;">
+        <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 200px; width: auto;">
         <h1 style="margin: 0;">Welcome to Capo Lab</h1>
     </div>
             <p><b>We explore the past life of microorganisms in marine and freshwater ecosystems</b></p>
@@ -703,8 +703,7 @@ async function render() {
     const navigation = `
         <nav>
             <div class="nav-container">
-                <<a href="#" onclick="navigateTo('home'); return false;" class="logo">
-    <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 30px; vertical-align: middle; margin-right: 8px;">Capo Lab</a>
+                <a href="#" onclick="navigateTo('home'); return false;" class="logo">Capo Lab</a>
                 <ul class="nav-links">
                     <li><a href="#" data-page="home" onclick="navigateTo('home'); return false;">Home</a></li>
                     <li><a href="#" data-page="research" onclick="navigateTo('research'); return false;">Research</a></li>
@@ -720,8 +719,8 @@ async function render() {
         <footer>
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="images/others/umu.png" alt="UmU Logo" onerror="this.src='https://placehold.co/150x60?text=UmU'">
-                   <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" onerror="this.src='https://placehold.co/150x60?text=Capo+Lab'">
+                    <img src="images/others/umu.png" alt="UmU Logo" style="height: 50px; width: auto;" onerror="this.src='https://placehold.co/150x60?text=UmU'">
+                    <img src="images/others/capolab_logo.png" alt="Capo Lab Logo" style="height: 50px; width: auto;" onerror="this.src='https://placehold.co/150x60?text=Capo+Lab'">
                 </div>
             <div class="footer-info">
                 <p>Contact: <a href="mailto:eric.capo@umu.se">eric.capo@umu.se</a></p>
